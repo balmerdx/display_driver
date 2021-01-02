@@ -53,6 +53,9 @@ public:
 
     void saveFontTest0(QFont font, QString text);
     bool saveFont(QString filename, QFont font, std::vector<CharIntervalsToSave> intervals, int bit_per_pixel);
+
+    //Temp code
+    bool saveBitmapFont(QString filename, const uint8_t *font, QString fontName);
 signals:
 
 public slots:

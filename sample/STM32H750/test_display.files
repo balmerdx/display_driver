@@ -2,8 +2,12 @@
 ../../display/float_to_string.c
 ../../display/utf_font.c
 ../../display/fonts/DefaultFonts.c
+../../display/fonts/font_8x15.c
+../../display/fonts/font_big.c
 ../../display/fonts/font_condensed30.c
 ../../display/fonts/font_condensed59.c
+../../display/fonts/font_seven_seg.c
+../../display/fonts/font_small.c
 ../tests/test_font.c
 Src/main.c
 Src/stm32h7xx_hal_msp.c
@@ -41,8 +45,12 @@ Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c
 ../../display/float_to_string.h
 ../../display/utf_font.h
 ../../display/fonts/DefaultFonts.h
+../../display/fonts/font_8x15.h
+../../display/fonts/font_big.h
 ../../display/fonts/font_condensed30.h
 ../../display/fonts/font_condensed59.h
+../../display/fonts/font_seven_seg.h
+../../display/fonts/font_small.h
 Src/main.h
 Src/stm32h7xx_hal_conf.h
 Src/stm32h7xx_it.h

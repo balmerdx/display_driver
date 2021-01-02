@@ -336,3 +336,189 @@ void FontConverter::writeHex(QTextStream& stream, const void* data, size_t dataS
     }
     stream << endl;
 }
+
+bool FontConverter::saveBitmapFont(QString filename, const uint8_t* font, QString fontName)
+{
+    uint32_written = 0;
+
+    std::vector<CharIntervalsToSave> intervals(1);
+    int bit_per_pixel = 1;
+
+    int font_width = font[0];
+    int font_height = font[1];
+    intervals[0].char_start = font[2];
+    intervals[0].char_count = font[3];
+
+    std::vector<bool> image(font_width*font_height);
+    auto get = [&image, font_width](int x, int y){ return image[x+y*font_width]; };
+
+    FontData fdata;
+    fdata.font_header.height = font_height;
+    fdata.font_header.ascent = font_height-2;
+    fdata.font_header.char_intervals_count = intervals.size();
+    fdata.font_header.bits_per_pixel = bit_per_pixel;
+    fdata.intervals = intervals;
+
+
+    uint32_t chars_count = 0;
+    for(const CharIntervalsToSave& it : intervals)
+    {
+        chars_count += it.char_count;
+    }
+
+    //char_data_offset - Считаем в uint32_t числах. offset от начала файла, в который пишется текущий char.
+    uint32_t char_data_offset = sizeof(FontToSave)+sizeof(CharIntervalsToSave)*intervals.size()+sizeof(CharInfoToSave)*chars_count;
+    Q_ASSERT(char_data_offset%4==0);
+    char_data_offset /= 4;
+
+    //31 это у нас пробел шириной в цифру
+    for(size_t itrv = 0; itrv<intervals.size(); itrv++)
+    {
+        QString text;
+        CharIntervalsToSave& its = intervals[itrv];
+        for(int c=its.char_start; c<its.char_start+its.char_count; c++)
+        {
+            text.append(QChar((ushort)c));
+        }
+
+        for(int i=0; i<text.size(); i++)
+        {
+            CharInfo info;
+            QTextStream comment_stream(&info.comment);
+
+            float xadvance = font_width;
+
+            image.clear();
+
+            int xmin = font_width;
+            int xmax = 0;
+            int ymin = font_height;
+            int ymax = 0;
+            //xmax, ymax - really is next point after max
+            {
+                uint16_t temp=(i*((font_width/8)*font_height))+4;
+                int size = ((font_width/8)*font_height);
+                const uint8_t* data = font + temp;
+                const uint8_t* data_end = data + size;
+                while(data < data_end)
+                {
+                    uint8_t ch= *data++;
+                    for(int i=7;i>=0;i--)
+                    {
+                        bool on = (ch&(1<<i))?true:false;
+                        int x = image.size()%font_width;
+                        int y = image.size()/font_width;
+                        if(on)
+                        {
+                            xmin = std::min(xmin, x);
+                            xmax = std::max(xmax, x+1);
+                            ymin = std::min(ymin, y);
+                            ymax = std::max(ymax, y+1);
+                        }
+
+                        image.push_back(on);
+                    }
+                }
+
+                if(xmax<xmin)
+                {
+                    xmin = xmax = 0;
+                    ymin = ymax = 0;
+                }
+            }
+
+            QRect charRect(xmin, ymin, xmax-xmin, ymax-ymin);
+
+            comment_stream << "//char='" << text[i] << "'";
+            comment_stream << " offset=(" << charRect.left() << ", " << charRect.top() << ")";
+            comment_stream << " width=" << charRect.width();
+            comment_stream << " height=" << charRect.height();
+            comment_stream << " xadvance=" << xadvance;
+            comment_stream << endl;
+
+            info.info.data_offset = char_data_offset;
+            info.info.xoffset = charRect.left();
+            info.info.yoffset = charRect.top();
+            info.info.width = charRect.width();
+            info.info.height = charRect.height();
+            info.info.xadvance = lroundf(xadvance);
+            info.info.pad = 0;
+
+            if(fdata.font_header.bits_per_pixel==1)
+            {
+                std::vector<bool> pixels;
+                for(int y=0; y<charRect.height(); y++)
+                {
+                    comment_stream << "//";
+                    for(int x=0; x<charRect.width(); x++)
+                    {
+                        bool on = get(x+charRect.left(), y+charRect.top());
+                        pixels.push_back(on);
+                        comment_stream << (on?'X':'.');
+                    }
+                    comment_stream << endl;
+                }
+                //pixels to bits
+                std::vector<uint32_t>& pixels32 = info.data;
+                uint32_t data32 = 0;
+                int bits_filled = 0;
+                for(bool on : pixels)
+                {
+                    if(on)
+                        data32 |= uint32_t(1)<<bits_filled;
+
+                    bits_filled++;
+
+                    if(bits_filled==32)
+                    {
+                        pixels32.push_back(data32);
+                        data32 = 0;
+                        bits_filled = 0;
+                    }
+                }
+
+                if(bits_filled)
+                    pixels32.push_back(data32);
+            }
+
+            char_data_offset += info.data.size();
+
+            fdata.char_infos.push_back(info);
+        }
+    }
+
+    QFile file(filename);
+    if(!file.open(QIODevice::ReadWrite|QIODevice::Truncate|QIODevice::Text))
+        return false;
+    QTextStream file_stream(&file);
+    file_stream << "// bitmap font name=" << fontName << endl;
+    file_stream << "// height=" << fdata.font_header.height << endl;
+    file_stream << "// bytes count=" << char_data_offset*4 << "  bits_per_pixel=" << fdata.font_header.bits_per_pixel <<endl;
+
+    file_stream << "const uint32_t "<< fontName <<"["<< char_data_offset << "]= {" << endl;
+
+    writeHex(file_stream, &fdata.font_header, sizeof(fdata.font_header));
+
+    for(const CharIntervalsToSave& it : intervals)
+    {
+        file_stream << "// start char =" << it.char_start << " count=" << it.char_count << endl;
+        writeHex(file_stream, &it, sizeof(it));
+    }
+
+    file_stream << "// char infos count=" << chars_count << endl;
+    for(const CharInfo& info : fdata.char_infos)
+    {
+        writeHex(file_stream, &info.info, sizeof(info.info));
+    }
+
+    for(const CharInfo& info : fdata.char_infos)
+    {
+        file_stream << info.comment;
+        writeHex(file_stream, info.data.data(), info.data.size()*4);
+    }
+
+    file_stream << "};" << endl;
+
+    Q_ASSERT(char_data_offset==uint32_written);
+    return true;
+}

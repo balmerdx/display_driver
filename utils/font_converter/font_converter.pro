@@ -14,10 +14,12 @@ TEMPLATE = app
 CONFIG += c++11
 
 SOURCES += main.cpp\
+    ../../display/fonts/DefaultFonts.c \
         convertfontdialog.cpp \
     fontconverter.cpp \
     selectcharintervaldialog.cpp
 
 HEADERS  += convertfontdialog.h \
+    ../../display/fonts/DefaultFonts.h \
     fontconverter.h \
     selectcharintervaldialog.h

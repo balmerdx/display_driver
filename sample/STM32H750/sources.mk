@@ -8,8 +8,12 @@ DEPS += \
 	output/base/__/__/display/float_to_string.d \
 	output/base/__/__/display/utf_font.d \
 	output/base/__/__/display/fonts/DefaultFonts.d \
+	output/base/__/__/display/fonts/font_8x15.d \
+	output/base/__/__/display/fonts/font_big.d \
 	output/base/__/__/display/fonts/font_condensed30.d \
 	output/base/__/__/display/fonts/font_condensed59.d \
+	output/base/__/__/display/fonts/font_seven_seg.d \
+	output/base/__/__/display/fonts/font_small.d \
 	output/base/__/tests/test_font.d \
 	output/base/Src/main.d \
 	output/base/Src/stm32h7xx_hal_msp.d \
@@ -50,8 +54,12 @@ OBJS += \
 	output/base/__/__/display/float_to_string.o \
 	output/base/__/__/display/utf_font.o \
 	output/base/__/__/display/fonts/DefaultFonts.o \
+	output/base/__/__/display/fonts/font_8x15.o \
+	output/base/__/__/display/fonts/font_big.o \
 	output/base/__/__/display/fonts/font_condensed30.o \
 	output/base/__/__/display/fonts/font_condensed59.o \
+	output/base/__/__/display/fonts/font_seven_seg.o \
+	output/base/__/__/display/fonts/font_small.o \
 	output/base/__/tests/test_font.o \
 	output/base/Src/main.o \
 	output/base/Src/stm32h7xx_hal_msp.o \
@@ -103,12 +111,28 @@ output/base/__/__/display/fonts/DefaultFonts.o: ./../../display/fonts/DefaultFon
 	@echo 'Building target: DefaultFonts.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
+output/base/__/__/display/fonts/font_8x15.o: ./../../display/fonts/font_8x15.c
+	@echo 'Building target: font_8x15.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/__/display/fonts/font_big.o: ./../../display/fonts/font_big.c
+	@echo 'Building target: font_big.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
 output/base/__/__/display/fonts/font_condensed30.o: ./../../display/fonts/font_condensed30.c
 	@echo 'Building target: font_condensed30.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
 output/base/__/__/display/fonts/font_condensed59.o: ./../../display/fonts/font_condensed59.c
 	@echo 'Building target: font_condensed59.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/__/display/fonts/font_seven_seg.o: ./../../display/fonts/font_seven_seg.c
+	@echo 'Building target: font_seven_seg.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/__/display/fonts/font_small.o: ./../../display/fonts/font_small.c
+	@echo 'Building target: font_small.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
 output/base/__/tests/test_font.o: ./../tests/test_font.c
