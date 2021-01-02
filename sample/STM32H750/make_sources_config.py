@@ -16,10 +16,11 @@ sources = [
 	"base" : ".",
 	"output" : "base",
 	"dirs" : [
-		"Src",
-		"Src/hardware",
 		"../../display",
 		"../../display/fonts",
+		"../tests",
+		"Src",
+		"Src/hardware",
 		"USB_DEVICE/App",
 		"USB_DEVICE/Target"
 		],

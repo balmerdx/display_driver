@@ -4,6 +4,13 @@
 
 
 DEPS += \
+	output/base/__/__/display/UTFT.d \
+	output/base/__/__/display/float_to_string.d \
+	output/base/__/__/display/utf_font.d \
+	output/base/__/__/display/fonts/DefaultFonts.d \
+	output/base/__/__/display/fonts/font_condensed30.d \
+	output/base/__/__/display/fonts/font_condensed59.d \
+	output/base/__/tests/test_font.d \
 	output/base/Src/main.d \
 	output/base/Src/stm32h7xx_hal_msp.d \
 	output/base/Src/stm32h7xx_it.d \
@@ -12,12 +19,6 @@ DEPS += \
 	output/base/Src/hardware/hw_ili9341.d \
 	output/base/Src/hardware/hw_ili9481.d \
 	output/base/Src/hardware/quadrature_encoder.d \
-	output/base/__/__/display/UTFT.d \
-	output/base/__/__/display/float_to_string.d \
-	output/base/__/__/display/utf_font.d \
-	output/base/__/__/display/fonts/DefaultFonts.d \
-	output/base/__/__/display/fonts/font_condensed30.d \
-	output/base/__/__/display/fonts/font_condensed59.d \
 	output/base/USB_DEVICE/App/usb_device.d \
 	output/base/USB_DEVICE/App/usbd_cdc_if.d \
 	output/base/USB_DEVICE/App/usbd_desc.d \
@@ -39,11 +40,19 @@ DEPS += \
 	output/hal/stm32h7xx_hal_cortex.d \
 	output/hal/stm32h7xx_hal.d \
 	output/hal/stm32h7xx_hal_exti.d \
+	output/hal/stm32h7xx_hal_spi.d \
 	output/hal/stm32h7xx_hal_tim.d \
 	output/hal/stm32h7xx_hal_tim_ex.d \
 
 
 OBJS += \
+	output/base/__/__/display/UTFT.o \
+	output/base/__/__/display/float_to_string.o \
+	output/base/__/__/display/utf_font.o \
+	output/base/__/__/display/fonts/DefaultFonts.o \
+	output/base/__/__/display/fonts/font_condensed30.o \
+	output/base/__/__/display/fonts/font_condensed59.o \
+	output/base/__/tests/test_font.o \
 	output/base/Src/main.o \
 	output/base/Src/stm32h7xx_hal_msp.o \
 	output/base/Src/stm32h7xx_it.o \
@@ -52,12 +61,6 @@ OBJS += \
 	output/base/Src/hardware/hw_ili9341.o \
 	output/base/Src/hardware/hw_ili9481.o \
 	output/base/Src/hardware/quadrature_encoder.o \
-	output/base/__/__/display/UTFT.o \
-	output/base/__/__/display/float_to_string.o \
-	output/base/__/__/display/utf_font.o \
-	output/base/__/__/display/fonts/DefaultFonts.o \
-	output/base/__/__/display/fonts/font_condensed30.o \
-	output/base/__/__/display/fonts/font_condensed59.o \
 	output/base/USB_DEVICE/App/usb_device.o \
 	output/base/USB_DEVICE/App/usbd_cdc_if.o \
 	output/base/USB_DEVICE/App/usbd_desc.o \
@@ -79,9 +82,38 @@ OBJS += \
 	output/hal/stm32h7xx_hal_cortex.o \
 	output/hal/stm32h7xx_hal.o \
 	output/hal/stm32h7xx_hal_exti.o \
+	output/hal/stm32h7xx_hal_spi.o \
 	output/hal/stm32h7xx_hal_tim.o \
 	output/hal/stm32h7xx_hal_tim_ex.o \
 
+
+output/base/__/__/display/UTFT.o: ./../../display/UTFT.c
+	@echo 'Building target: UTFT.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/__/display/float_to_string.o: ./../../display/float_to_string.c
+	@echo 'Building target: float_to_string.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/__/display/utf_font.o: ./../../display/utf_font.c
+	@echo 'Building target: utf_font.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/__/display/fonts/DefaultFonts.o: ./../../display/fonts/DefaultFonts.c
+	@echo 'Building target: DefaultFonts.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/__/display/fonts/font_condensed30.o: ./../../display/fonts/font_condensed30.c
+	@echo 'Building target: font_condensed30.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/__/display/fonts/font_condensed59.o: ./../../display/fonts/font_condensed59.c
+	@echo 'Building target: font_condensed59.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/tests/test_font.o: ./../tests/test_font.c
+	@echo 'Building target: test_font.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
 output/base/Src/main.o: ./Src/main.c
 	@echo 'Building target: main.c'
@@ -113,30 +145,6 @@ output/base/Src/hardware/hw_ili9481.o: ./Src/hardware/hw_ili9481.c
 
 output/base/Src/hardware/quadrature_encoder.o: ./Src/hardware/quadrature_encoder.c
 	@echo 'Building target: quadrature_encoder.c'
-	@$(CC) $(C_FLAGS) -o "$@" "$<"
-
-output/base/__/__/display/UTFT.o: ./../../display/UTFT.c
-	@echo 'Building target: UTFT.c'
-	@$(CC) $(C_FLAGS) -o "$@" "$<"
-
-output/base/__/__/display/float_to_string.o: ./../../display/float_to_string.c
-	@echo 'Building target: float_to_string.c'
-	@$(CC) $(C_FLAGS) -o "$@" "$<"
-
-output/base/__/__/display/utf_font.o: ./../../display/utf_font.c
-	@echo 'Building target: utf_font.c'
-	@$(CC) $(C_FLAGS) -o "$@" "$<"
-
-output/base/__/__/display/fonts/DefaultFonts.o: ./../../display/fonts/DefaultFonts.c
-	@echo 'Building target: DefaultFonts.c'
-	@$(CC) $(C_FLAGS) -o "$@" "$<"
-
-output/base/__/__/display/fonts/font_condensed30.o: ./../../display/fonts/font_condensed30.c
-	@echo 'Building target: font_condensed30.c'
-	@$(CC) $(C_FLAGS) -o "$@" "$<"
-
-output/base/__/__/display/fonts/font_condensed59.o: ./../../display/fonts/font_condensed59.c
-	@echo 'Building target: font_condensed59.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
 output/base/USB_DEVICE/App/usb_device.o: ./USB_DEVICE/App/usb_device.c
@@ -221,6 +229,10 @@ output/hal/stm32h7xx_hal.o: Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c
 
 output/hal/stm32h7xx_hal_exti.o: Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_exti.c
 	@echo 'Building target: stm32h7xx_hal_exti.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/hal/stm32h7xx_hal_spi.o: Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi.c
+	@echo 'Building target: stm32h7xx_hal_spi.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
 output/hal/stm32h7xx_hal_tim.o: Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.c

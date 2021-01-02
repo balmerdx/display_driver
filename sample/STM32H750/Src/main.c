@@ -28,40 +28,16 @@
 #include "fonts/DefaultFonts.h"
 #include "fonts/font_condensed30.h"
 #include "fonts/font_condensed59.h"
-#include "measure/calculate.h"
 
 /* Private variables ---------------------------------------------------------*/
-ADC_HandleTypeDef hadc1;
-ADC_HandleTypeDef hadc2;
-
-SPI_HandleTypeDef hspi4;
-
-UART_HandleTypeDef huart2;
-
-/*
-uint16_t last_data_us;
-uint16_t min_data_us = 0xFFFF;
-uint16_t max_data_us = 0;
-
-//При частоте 8 МГц 1-3 us короткий импульс, 46-47 длинный
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-    uint16_t cur_us = TimeUs();
-    uint16_t delta_us = cur_us-last_data_us;
-    if(delta_us < min_data_us)
-        min_data_us = delta_us;
-    if(delta_us > max_data_us)
-        max_data_us = delta_us;
-
-    last_data_us = cur_us;
-}
-*/
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config400MHz(void);
 void SystemClock_Config100MHz(void);
 static void CPU_CACHE_Enable(void);
 static void MX_GPIO_Init(void);
+
+void DrawFontAlphabet();
 
 /**
   * @brief  The application entry point.
@@ -111,6 +87,10 @@ int main(void)
   UTFT_fillScrW(VGA_BLUE);
   UTFT_setColorW(VGA_GREEN);
   UTFT_fillRect(10,10, 20,20);
+
+  DrawFontAlphabet();
+  while(1);
+
   UTF_SetFont(font_condensed30);
 
   while(1)
