@@ -1,2 +1,4 @@
 sample/STM32H750/output
-
+utils/font_converter/build-font_converter
+*\.creator\.user
+*\.pro\.user
