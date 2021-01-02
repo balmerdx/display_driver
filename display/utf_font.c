@@ -81,15 +81,7 @@ void UTF_SetFont(const uint32_t* font)
 int UTF_DrawString(int x, int y, const char* str)
 {
     if(utf_current_font==0)
-    {
-        if(UTFT_getFont())
-        {
-            UTFT_print(str, x, y);
-            return x+UTF_StringWidth(str);
-        }
-
         return x;
-    }
 
     int prev_dx = 0;
     UtfFontHeader* h = (UtfFontHeader*)utf_current_font;
@@ -147,13 +139,10 @@ int UTF_DrawString(int x, int y, const char* str)
 int UTF_StringWidth(const char* str)
 {
     if(utf_current_font==0)
-    {
-        if(UTFT_getFont())
-            return UTFT_getFontXsize()*strlen(str);
         return 0;
-    }
 
-    int sx = 0;
+    int x = 0;
+    int prev_dx = 0;
     while(*str)
     {
         uint16_t cur_char;
@@ -162,20 +151,33 @@ int UTF_StringWidth(const char* str)
             continue;
 
         UtfFontCharInfo* info = UTF_FindInfo(cur_char);
-        sx += info->xadvance;
+
+        int dx_fill = prev_dx+info->xoffset;
+        if(dx_fill)
+            x += dx_fill;
+
+        x += info->width;
+
+        prev_dx = info->xadvance-info->xoffset-info->width;
+        if(prev_dx<0)
+            prev_dx = 0;
+
+        if(*str==0)
+        {
+            //last char
+            int dx_fill = prev_dx;
+            if(dx_fill)
+                x += dx_fill;
+        }
     }
 
-    return sx;
+    return x;
 }
 
 int UTF_Height()
 {
     if(utf_current_font==0)
-    {
-        if(UTFT_getFont())
-            return UTFT_getFontYsize();
         return 0;
-    }
 
     UtfFontHeader* h = (UtfFontHeader*)utf_current_font;
     return h->height;
@@ -184,11 +186,7 @@ int UTF_Height()
 int UTF_Ascent()
 {
     if(utf_current_font==0)
-    {
-        if(UTFT_getFont())
-            return UTFT_getFontYsize();
         return 0;
-    }
 
     UtfFontHeader* h = (UtfFontHeader*)utf_current_font;
     return h->ascent;
@@ -279,10 +277,8 @@ void UTF_CalcPalette2bit(uint16_t palette[4])
 
 int UTF_DrawStringJustify(int x, int y, const char* str, int width, UTF_JUSTIFY justify)
 {
-    if(utf_current_font==0 && UTFT_getFont()==0)
-    {
+    if(utf_current_font==0)
         return x;
-    }
 
     int dx = UTF_StringWidth(str);
     int height = UTF_Height();

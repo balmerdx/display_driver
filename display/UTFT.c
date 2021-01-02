@@ -133,12 +133,6 @@ static int disp_x_size=239, disp_y_size=319;
 static uint16_t front_color;
 static uint16_t back_color;
 
-//uint8_t display_model, display_transfer_mode, display_serial_mode;
-//regtype *P_RS, *P_WR, *P_CS, *P_RST, *P_SDA, *P_SCL, *P_ALE;
-//regsize B_RS, B_WR, B_CS, B_RST, B_SDA, B_SCL, B_ALE;
-static _current_font	cfont;
-static bool _transparent;
-
 void UTFT_setPixel(uint16_t color);
 void UTFT_drawHLine(int x, int y, int l);
 void UTFT_drawVLine(int x, int y, int l);
@@ -445,9 +439,6 @@ void UTFT_InitLCD(uint8_t orientation)
     sendCMD(SET_DISPLAY_ON);    //Display on
 	delay(120);
 #endif
-    
-	cfont.font=0;
-	_transparent = false;
 }
 
 //Установить прямоугольную область и начать записть в видеопамять
@@ -698,19 +689,12 @@ uint16_t UTFT_getColor()
 
 void UTFT_setBackColor(uint8_t r, uint8_t g, uint8_t b)
 {
-	_transparent=false;
     back_color = UTFT_color(r,g,b);
 }
 
 void UTFT_setBackColorW(uint32_t color)
 {
-	if (color==VGA_TRANSPARENT)
-		_transparent=true;
-	else
-	{
-        back_color = (uint16_t)color;
-		_transparent=false;
-	}
+    back_color = (uint16_t)color;
 }
 
 uint16_t UTFT_getBackColor()
@@ -815,163 +799,6 @@ void UTFT_drawVLine(int x, int y, int l)
 		TFTWriteData(front_color);
 	}
 	TFTEndData();
-}
-
-void UTFT_printChar(uint8_t c, int x, int y)
-{
-	if (!_transparent)
-	{
-        UTFT_setXY(x,y,x+cfont.x_size-1,y+cfont.y_size-1);
-
-        TFTBeginData();
-        uint16_t temp=((c-cfont.offset)*((cfont.x_size/8)*cfont.y_size))+4;
-        int size = ((cfont.x_size/8)*cfont.y_size);
-        uint8_t* data = &fontbyte(temp);
-        uint8_t* data_end = data + size;
-        while(data < data_end)
-        {
-            uint8_t ch= *data++;
-            /*
-            for(int i=0;i<8;i++)
-            {
-                TFTWriteData((ch&(1<<(7-i)))?front_color:back_color);
-            }
-            */
-            for(int i=7;i>=0;i--)
-            {
-                TFTWriteData((ch&(1<<i))?front_color:back_color);
-            }
-        }
-        TFTEndData();
-	}
-	else
-	{
-        uint16_t temp=((c-cfont.offset)*((cfont.x_size/8)*cfont.y_size))+4;
-        for(int j=0;j<cfont.y_size;j++)
-		{
-			for (int zz=0; zz<(cfont.x_size/8); zz++)
-			{
-                uint8_t ch=fontbyte(temp+zz);
-                for(int i=0;i<8;i++)
-				{   
-					UTFT_setXY(x+i+(zz*8),y+j,x+i+(zz*8)+1,y+j+1);
-				
-					if((ch&(1<<(7-i)))!=0)   
-					{
-                        UTFT_setPixel(front_color);
-					} 
-				}
-			}
-			temp+=(cfont.x_size/8);
-		}
-	}
-}
-
-void UTFT_rotateChar(uint8_t c, int x, int y, int pos, int deg)
-{
-    uint8_t i,j,ch;
-    uint16_t temp;
-	int newx,newy;
-	double radian;
-	radian=deg*0.0175;  
-
-
-	temp=((c-cfont.offset)*((cfont.x_size/8)*cfont.y_size))+4;
-	for(j=0;j<cfont.y_size;j++) 
-	{
-		for (int zz=0; zz<(cfont.x_size/8); zz++)
-		{
-			ch=fontbyte(temp+zz);
-			for(i=0;i<8;i++)
-			{   
-				newx=x+(((i+(zz*8)+(pos*cfont.x_size))*cos(radian))-((j)*sin(radian)));
-				newy=y+(((j)*cos(radian))+((i+(zz*8)+(pos*cfont.x_size))*sin(radian)));
-
-				UTFT_setXY(newx,newy,newx+1,newy+1);
-				
-				if((ch&(1<<(7-i)))!=0)   
-				{
-                    UTFT_setPixel(front_color);
-				} 
-				else  
-				{
-					if (!_transparent)
-                        UTFT_setPixel(back_color);
-				}   
-			}
-		}
-		temp+=(cfont.x_size/8);
-	}
-}
-
-void UTFT_print(const char *st, int x, int y)
-{
-    UTFT_printRotate(st, x, y, 0);
-}
-
-void UTFT_printRotate(const char *st, int x, int y, int deg)
-{
-	int stl, i;
-
-	stl = strlen(st);
-
-	if (x==UTFT_RIGHT)
-		x=(disp_x_size+1)-(stl*cfont.x_size);
-	if (x==UTFT_CENTER)
-		x=((disp_x_size+1)-(stl*cfont.x_size))/2;
-
-	for (i=0; i<stl; i++)
-    {
-        char c = *st++;
-        if(c==NUM_SPACE)
-            c = 32;
-
-		if (deg==0)
-            UTFT_printChar(c, x + (i*(cfont.x_size)), y);
-		else
-            UTFT_rotateChar(c, x, y, i, deg);
-    }
-}
-
-
-void UTFT_printNumI(long num, int x, int y, int length, char filler)
-{
-	char st[27];
-    intToString(st, num, length, filler);
-    UTFT_print(st, x, y);
-}
-
-void UTFT_printNumF(float value, int x, int y, int places, int minwidth, bool rightjustify)
-{
-    char st[27];
-    floatToString(st, 27, value, places, minwidth, rightjustify);
-    UTFT_print(st, x, y);
-}
-
-void UTFT_setFont(const uint8_t* font)
-{
-    cfont.font=(uint8_t*)font;
-	cfont.x_size=fontbyte(0);
-	cfont.y_size=fontbyte(1);
-	cfont.offset=fontbyte(2);
-	cfont.numchars=fontbyte(3);
-
-    utf_current_font = 0;
-}
-
-uint8_t* UTFT_getFont()
-{
-	return cfont.font;
-}
-
-uint8_t UTFT_getFontXsize()
-{
-	return cfont.x_size;
-}
-
-uint8_t UTFT_getFontYsize()
-{
-	return cfont.y_size;
 }
 
 void UTFT_drawBitmap(int x, int y, const Bitmap16bit* bitmap)

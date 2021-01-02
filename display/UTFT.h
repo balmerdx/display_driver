@@ -46,7 +46,6 @@
 #define VGA_NAVY		0x0010
 #define VGA_FUCHSIA		0xF81F
 #define VGA_PURPLE		0x8010
-#define VGA_TRANSPARENT	0xFFFFFFFF
 
 #define UTFT_COLOR(r, g, b) ((((uint16_t)r)&248)<<8 | (((uint16_t)g)&252)<<3 | (((uint16_t)b)&248)>>3)
 #define UTFT_RED(color) (((uint16_t)color>>8)&248)
@@ -55,15 +54,6 @@
 
 
 #define bitmapdatatype uint16_t*
-
-typedef struct _current_font
-{
-	uint8_t* font;
-	uint8_t x_size;
-	uint8_t y_size;
-	uint8_t offset;
-	uint8_t numchars;
-} _current_font;
 
 typedef struct Bitmap16bit
 {
@@ -101,19 +91,6 @@ uint16_t UTFT_getColor();
 void UTFT_setBackColor(uint8_t r, uint8_t g, uint8_t b);
 void UTFT_setBackColorW(uint32_t color);
 uint16_t UTFT_getBackColor();
-
-//deg=0
-void UTFT_print(const char *st, int x, int y);
-void UTFT_printRotate(const char *st, int x, int y, int deg);
-
-//length=0, char filler=' '
-void UTFT_printNumI(long num, int x, int y, int length, char filler);
-void UTFT_printNumF(float value, int x, int y, int places, int minwidth, bool rightjustify);
-
-void UTFT_setFont(const uint8_t* font);
-uint8_t* UTFT_getFont();
-uint8_t UTFT_getFontXsize();
-uint8_t UTFT_getFontYsize();
 
 void UTFT_drawBitmap(int x, int y, const Bitmap16bit* bitmap);
 
