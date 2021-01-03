@@ -15,6 +15,8 @@ DEPS += \
 	output/base/__/__/display/fonts/font_seven_seg.d \
 	output/base/__/__/display/fonts/font_small.d \
 	output/base/__/tests/test_font.d \
+	output/base/__/tests/test_images.d \
+	output/base/__/tests/test_primitives.d \
 	output/base/Src/main.d \
 	output/base/Src/stm32h7xx_hal_msp.d \
 	output/base/Src/stm32h7xx_it.d \
@@ -61,6 +63,8 @@ OBJS += \
 	output/base/__/__/display/fonts/font_seven_seg.o \
 	output/base/__/__/display/fonts/font_small.o \
 	output/base/__/tests/test_font.o \
+	output/base/__/tests/test_images.o \
+	output/base/__/tests/test_primitives.o \
 	output/base/Src/main.o \
 	output/base/Src/stm32h7xx_hal_msp.o \
 	output/base/Src/stm32h7xx_it.o \
@@ -137,6 +141,14 @@ output/base/__/__/display/fonts/font_small.o: ./../../display/fonts/font_small.c
 
 output/base/__/tests/test_font.o: ./../tests/test_font.c
 	@echo 'Building target: test_font.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/tests/test_images.o: ./../tests/test_images.c
+	@echo 'Building target: test_images.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/tests/test_primitives.o: ./../tests/test_primitives.c
+	@echo 'Building target: test_primitives.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
 output/base/Src/main.o: ./Src/main.c

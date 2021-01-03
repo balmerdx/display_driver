@@ -9,6 +9,8 @@
 ../../display/fonts/font_seven_seg.c
 ../../display/fonts/font_small.c
 ../tests/test_font.c
+../tests/test_images.c
+../tests/test_primitives.c
 Src/main.c
 Src/stm32h7xx_hal_msp.c
 Src/stm32h7xx_it.c

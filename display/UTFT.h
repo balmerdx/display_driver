@@ -84,14 +84,11 @@ void UTFT_setBackColorW(uint32_t color);
 uint16_t UTFT_getBackColor();
 
 void UTFT_drawBitmap(int x, int y, const Bitmap16bit* bitmap);
+void UTFT_drawBitmap4(int x, int y, const Bitmap4bit* bitmap);
 
 //scaled image
 void UTFT_drawBitmapS(int x, int y, const Bitmap16bit* bitmap, int scale);
 
-//rotated image
-void UTFT_drawBitmapR(int x, int y, const Bitmap16bit* bitmap, int deg, int rox, int roy);
-
-void UTFT_drawBitmap4(int x, int y, const Bitmap4bit* bitmap);
 
 void UTFT_lcdOff();
 void UTFT_lcdOn();

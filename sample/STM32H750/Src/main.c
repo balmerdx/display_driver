@@ -38,6 +38,8 @@ static void CPU_CACHE_Enable(void);
 static void MX_GPIO_Init(void);
 
 void DrawFontAlphabet();
+void DrawPrimitives();
+void PrintImages();
 
 /**
   * @brief  The application entry point.
@@ -56,7 +58,8 @@ int main(void)
   MX_USB_DEVICE_Init();
   MX_GPIO_Init();
 #ifdef DISPLAY_ILI9341
-    UTFT_InitLCD(UTFT_LANDSCAPE2);
+  UTFT_InitLCD(UTFT_LANDSCAPE2);
+  //UTFT_InitLCD(UTFT_PORTRAIT);
 #else
     UTFT_InitLCD(UTFT_LANDSCAPE);
 #endif
@@ -89,10 +92,10 @@ int main(void)
   }
 
   UTFT_fillScrW(VGA_BLUE);
-  UTFT_setColorW(VGA_GREEN);
-  UTFT_fillRect(10,10, 20,20);
 
   //DrawFontAlphabet();  while(1);
+  //DrawPrimitives(); while(1);
+  PrintImages(); while(1);
 
   UTF_SetFont(font_condensed30);
 

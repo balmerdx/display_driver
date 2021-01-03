@@ -115,12 +115,13 @@ static int disp_x_size=239, disp_y_size=319;
 #endif
 #include "UTFT.h"
 
-#define TFT_RST_OFF HwLcdPinRst(1)
-#define TFT_RST_ON  HwLcdPinRst(0)
-
 #define swap(type, i, j) {type t = i; i = j; j = t;}
-#define fontbyte(x) (cfont.font[x])
 
+#define ARG(...) { __VA_ARGS__ }
+#define CMD(cmd, data) { \
+    static uint8_t data_arr[] =  data;  \
+    sendCMDandData(cmd, data_arr, sizeof(data_arr)); \
+    }
 
 /*
 	The functions and variables below should not normally be used.
@@ -133,15 +134,12 @@ static int disp_x_size=239, disp_y_size=319;
 static uint16_t front_color;
 static uint16_t back_color;
 
-void UTFT_setPixel(uint16_t color);
 void UTFT_drawHLine(int x, int y, int l);
 void UTFT_drawVLine(int x, int y, int l);
 void UTFT_clrXY();
 void UTFT_rotateChar(uint8_t c, int x, int y, int pos, int deg);
 
 static void WRITE_DATA(uint8_t VL);
-uint8_t UTFT_readID(void);
-uint8_t UTFT_Read_Register(uint8_t Addr, uint8_t xParameter);
 
 void delay(uint32_t nTime)
 {
@@ -208,6 +206,16 @@ void TFTEndData()
 	HwLcdWait();
     HwLcdPinCE(1);
 }
+
+static void sendCMDandData(uint8_t cmd, uint8_t* data, int data_size)
+{
+    sendCMD(cmd);
+    for(int i=0; i<data_size; i++)
+    {
+        WRITE_DATA(data[i]);
+    }
+}
+
 
 void UTFT_InitLCD(uint8_t orientation)
 {
@@ -330,108 +338,35 @@ void UTFT_InitLCD(uint8_t orientation)
 #endif
 
 #ifdef DISPLAY_ILI9341
-    sendCMD(0xCB); //Power control A
-	WRITE_DATA(0x39);
-	WRITE_DATA(0x2C);
-	WRITE_DATA(0x00);
-	WRITE_DATA(0x34);
-	WRITE_DATA(0x02);
+    CMD(0xCB, ARG(0x39,0x2C,0x00,0x34,0x02)); //Power control A
+    CMD(0xCF, ARG(0x00, 0XC1, 0X30)); //Power control B
+    CMD(0xE8, ARG(0x85, 0x00, 0x78)); //Driver timing control A
+    CMD(0xEA, ARG(0x00,0x00)); //Driver timing control B
+    CMD(0xED, ARG(0x64, 0x03, 0X12, 0X81)); //Power on sequence control
+    CMD(0xF7, ARG(0x20)); //Pump ratio control
+    CMD(0xC0, ARG(0x23 /*VRH[5:0]*/));    	//Power control
+    CMD(0xC1, ARG(0x10 /*SAP[2:0];BT[3:0]*/));    	//Power control
+    CMD(0xC5, ARG(0x3e/*Contrast*/, 0x28));    	//VCM control
+    CMD(0xC7, ARG(0x86));    	//VCM control2
     
-    sendCMD(0xCF); //Power control B
-	WRITE_DATA(0x00);
-	WRITE_DATA(0XC1);
-	WRITE_DATA(0X30);
-    
-    sendCMD(0xE8); //Driver timing control A
-	WRITE_DATA(0x85);
-	WRITE_DATA(0x00);
-	WRITE_DATA(0x78);
-    
-    sendCMD(0xEA); //Driver timing control B
-	WRITE_DATA(0x00);
-	WRITE_DATA(0x00);
-    
-    sendCMD(0xED); //Power on sequence control
-	WRITE_DATA(0x64);
-	WRITE_DATA(0x03);
-	WRITE_DATA(0X12);
-	WRITE_DATA(0X81);
-    
-    sendCMD(0xF7); //Pump ratio control
-	WRITE_DATA(0x20);
-    
-	sendCMD(0xC0);    	//Power control
-	WRITE_DATA(0x23);   	//VRH[5:0]
-    
-	sendCMD(0xC1);    	//Power control
-	WRITE_DATA(0x10);   	//SAP[2:0];BT[3:0]
-    
-	sendCMD(0xC5);    	//VCM control
-	WRITE_DATA(0x3e);   	//Contrast
-	WRITE_DATA(0x28);
-    
-	sendCMD(0xC7);    	//VCM control2
-	WRITE_DATA(0x86);  	 //--
-    
-    sendCMD(SET_ADDRESS_MODE);    	// Memory Access Control
+
+    // Memory Access Control
     if (orient==UTFT_LANDSCAPE)
-        WRITE_DATA(PAGECOL_SELECTION | COLUMN_ADDRESS_ORDER | PAGE_ADDRESS_ORDER | BGR); //landscape
+        CMD(SET_ADDRESS_MODE, ARG(PAGECOL_SELECTION | COLUMN_ADDRESS_ORDER | PAGE_ADDRESS_ORDER | BGR)) //landscape
     else if(orient==UTFT_LANDSCAPE2)
-        WRITE_DATA(PAGECOL_SELECTION | BGR); //landscape
+        CMD(SET_ADDRESS_MODE, ARG(PAGECOL_SELECTION | BGR)) //landscape
     else
-        WRITE_DATA(0x48);  	//C8	   MH=0 BGR=1 ML=0 MV=0 MX=1 MY=0
+        CMD(SET_ADDRESS_MODE, ARG(COLUMN_ADDRESS_ORDER | BGR)) //Portrait
     
-    sendCMD(SET_PIXEL_FORMAT);      //Pixel Format Set
-    WRITE_DATA(0x55);   //DBI = 101 DPI=101
+    CMD(SET_PIXEL_FORMAT, ARG(0x55/*DBI = 101 DPI=101*/));      //Pixel Format Set
+    CMD(0xB1, ARG(0x00, 0x18));       //Frame Rate Control
+    CMD(0xB6, ARG(0x08, 0x82, 0x27)); // Display Function Control
+    CMD(0xF2, ARG(0x00));    	// 3Gamma Function Disable
     
-    sendCMD(0xB1);      //Frame Rate Control
-	WRITE_DATA(0x00);
-	WRITE_DATA(0x18);
+    CMD(0x26, ARG(0x01));    	//Gamma curve selected
     
-	sendCMD(0xB6);    	// Display Function Control
-	WRITE_DATA(0x08);
-	WRITE_DATA(0x82);
-	WRITE_DATA(0x27);
-    
-	sendCMD(0xF2);    	// 3Gamma Function Disable
-	WRITE_DATA(0x00);
-    
-	sendCMD(0x26);    	//Gamma curve selected
-	WRITE_DATA(0x01);
-    
-	sendCMD(0xE0);    	//Set Gamma
-	WRITE_DATA(0x0F);
-	WRITE_DATA(0x31);
-	WRITE_DATA(0x2B);
-	WRITE_DATA(0x0C);
-	WRITE_DATA(0x0E);
-	WRITE_DATA(0x08);
-	WRITE_DATA(0x4E);
-	WRITE_DATA(0xF1);
-	WRITE_DATA(0x37);
-	WRITE_DATA(0x07);
-	WRITE_DATA(0x10);
-	WRITE_DATA(0x03);
-	WRITE_DATA(0x0E);
-	WRITE_DATA(0x09);
-	WRITE_DATA(0x00);
-    
-	sendCMD(0XE1);    	//Set Gamma
-	WRITE_DATA(0x00);
-	WRITE_DATA(0x0E);
-	WRITE_DATA(0x14);
-	WRITE_DATA(0x03);
-	WRITE_DATA(0x11);
-	WRITE_DATA(0x07);
-	WRITE_DATA(0x31);
-	WRITE_DATA(0xC1);
-	WRITE_DATA(0x48);
-	WRITE_DATA(0x08);
-	WRITE_DATA(0x0F);
-	WRITE_DATA(0x0C);
-	WRITE_DATA(0x31);
-	WRITE_DATA(0x36);
-	WRITE_DATA(0x0F);
+    CMD(0xE0, ARG(0x0F, 0x31, 0x2B, 0x0C, 0x0E, 0x08, 0x4E, 0xF1, 0x37, 0x07, 0x10, 0x03, 0x0E, 0x09, 0x00)); //Set Gamma
+    CMD(0XE1, ARG(0x00, 0x0E, 0x14, 0x03, 0x11, 0x07, 0x31, 0xC1, 0x48, 0x08, 0x0F, 0x0C, 0x31, 0x36, 0x0F)); //Set Gamma
     
     sendCMD(EXIT_SLEEP_MODE);    	//Exit Sleep
 	delay(120); 
@@ -594,14 +529,10 @@ void UTFT_drawCircle(int x, int y, int radius)
 	int x1 = 0;
 	int y1 = radius;
  
-	UTFT_setXY(x, y + radius, x, y + radius);
-	LCD_Write_DATA16(front_color);
-	UTFT_setXY(x, y - radius, x, y - radius);
-	LCD_Write_DATA16(front_color);
-	UTFT_setXY(x + radius, y, x + radius, y);
-	LCD_Write_DATA16(front_color);
-	UTFT_setXY(x - radius, y, x - radius, y);
-	LCD_Write_DATA16(front_color);
+    UTFT_drawPixel(x, y + radius);
+    UTFT_drawPixel(x, y - radius);
+    UTFT_drawPixel(x + radius, y);
+    UTFT_drawPixel(x - radius, y);
  
 	while(x1 < y1)
 	{
@@ -614,22 +545,14 @@ void UTFT_drawCircle(int x, int y, int radius)
 		x1++;
 		ddF_x += 2;
 		f += ddF_x;    
-		UTFT_setXY(x + x1, y + y1, x + x1, y + y1);
-		LCD_Write_DATA16(front_color);
-		UTFT_setXY(x - x1, y + y1, x - x1, y + y1);
-		LCD_Write_DATA16(front_color);
-		UTFT_setXY(x + x1, y - y1, x + x1, y - y1);
-		LCD_Write_DATA16(front_color);
-		UTFT_setXY(x - x1, y - y1, x - x1, y - y1);
-		LCD_Write_DATA16(front_color);
-		UTFT_setXY(x + y1, y + x1, x + y1, y + x1);
-		LCD_Write_DATA16(front_color);
-		UTFT_setXY(x - y1, y + x1, x - y1, y + x1);
-		LCD_Write_DATA16(front_color);
-		UTFT_setXY(x + y1, y - x1, x + y1, y - x1);
-		LCD_Write_DATA16(front_color);
-		UTFT_setXY(x - y1, y - x1, x - y1, y - x1);
-		LCD_Write_DATA16(front_color);
+        UTFT_drawPixel(x + x1, y + y1);
+        UTFT_drawPixel(x - x1, y + y1);
+        UTFT_drawPixel(x + x1, y - y1);
+        UTFT_drawPixel(x - x1, y - y1);
+        UTFT_drawPixel(x + y1, y + x1);
+        UTFT_drawPixel(x - y1, y + x1);
+        UTFT_drawPixel(x + y1, y - x1);
+        UTFT_drawPixel(x - y1, y - x1);
 	}
 }
 
@@ -702,15 +625,10 @@ uint16_t UTFT_getBackColor()
     return back_color;
 }
 
-void UTFT_setPixel(uint16_t color)
-{
-	LCD_Write_DATA16(color);	// rrrrrggggggbbbbb
-}
-
 void UTFT_drawPixel(int x, int y)
 {
 	UTFT_setXY(x, y, x, y);
-	UTFT_setPixel(front_color);
+    LCD_Write_DATA16(front_color);	// rrrrrggggggbbbbb
 }
 
 void UTFT_drawLine(int x1, int y1, int x2, int y2)
@@ -732,8 +650,7 @@ void UTFT_drawLine(int x1, int y1, int x2, int y2)
 			int t = - (dy >> 1);
 			while (true)
 			{
-				UTFT_setXY (col, row, col, row);
-				LCD_Write_DATA16(front_color);
+                UTFT_drawPixel(col, row);
 				if (row == y2)
 					break;
 				row += ystep;
@@ -750,8 +667,7 @@ void UTFT_drawLine(int x1, int y1, int x2, int y2)
 			int t = - (dx >> 1);
 			while (true)
 			{
-				UTFT_setXY (col, row, col, row);
-				LCD_Write_DATA16(front_color);
+                UTFT_drawPixel(col, row);
 				if (col == x2)
 					break;
 				col += xstep;
@@ -844,33 +760,6 @@ void UTFT_drawBitmapS(int x, int y, const Bitmap16bit* bitmap, int scale)
                     TFTWriteData(col);
             }
         TFTEndData();
-    }
-}
-
-void UTFT_drawBitmapR(int x, int y, const Bitmap16bit* bitmap, int deg, int rox, int roy)
-{
-	if (deg==0)
-        UTFT_drawBitmap(x, y, bitmap);
-	else
-	{
-        int sx = bitmap->width;
-        int sy = bitmap->height;
-        const uint16_t* data = bitmap->colors;
-
-        float radian = deg*0.01745f;
-		float cr = cosf(radian);
-		float sr = sinf(radian);
-        for (int ty=0; ty<sy; ty++)
-        for (int tx=0; tx<sx; tx++)
-		{
-            uint16_t col=data[(ty*sx)+tx];
-
-            int newx=x+rox+(((tx-rox)*cr)-((ty-roy)*sr));
-            int newy=y+roy+(((ty-roy)*cr)+((tx-rox)*sr));
-
-			UTFT_setXY(newx, newy, newx, newy);
-			LCD_Write_DATA16(col);
-		}
     }
 }
 

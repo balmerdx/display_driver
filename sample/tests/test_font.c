@@ -1,6 +1,5 @@
 #include "UTFT.h"
 #include "utf_font.h"
-#include "fonts/DefaultFonts.h"
 #include "fonts/font_condensed30.h"
 #include "fonts/font_condensed59.h"
 #include "fonts/font_small.h"
