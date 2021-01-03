@@ -55,8 +55,12 @@ int main(void)
 
   MX_USB_DEVICE_Init();
   MX_GPIO_Init();
+#ifdef DISPLAY_ILI9341
+    UTFT_InitLCD(UTFT_LANDSCAPE2);
+#else
+    UTFT_InitLCD(UTFT_LANDSCAPE);
+#endif
 
-  UTFT_InitLCD(UTFT_LANDSCAPE);
   QuadEncInit();
 
   if(0)
@@ -88,8 +92,7 @@ int main(void)
   UTFT_setColorW(VGA_GREEN);
   UTFT_fillRect(10,10, 20,20);
 
-  DrawFontAlphabet();
-  while(1);
+  //DrawFontAlphabet();  while(1);
 
   UTF_SetFont(font_condensed30);
 

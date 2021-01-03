@@ -11,15 +11,7 @@
  modify it under the terms of the CC BY-NC-SA 3.0 license.
  Please see the included documents for further information.
  */
-
-#ifndef UTFT_h
-#define UTFT_h
-
-#include "float_to_string.h"
-
-#define UTFT_LEFT 0
-#define UTFT_RIGHT 9999
-#define UTFT_CENTER 9998
+#pragma once
 
 #define UTFT_PORTRAIT 0
 #define UTFT_LANDSCAPE 1
@@ -70,7 +62,6 @@ typedef struct Bitmap4bit
     uint8_t colors[];
 } Bitmap4bit;
 
-//LANDSCAPE default
 void UTFT_InitLCD(uint8_t orientation);
 void UTFT_clrScr();
 void UTFT_drawPixel(int x, int y);
@@ -115,5 +106,3 @@ void UTFT_verticalScroll(uint16_t vsp);
 
 //R,G,B to hi color
 uint16_t UTFT_color(uint8_t r, uint8_t g, uint8_t b);
-
-#endif

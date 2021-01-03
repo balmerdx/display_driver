@@ -11,8 +11,13 @@ void Error_Handler(void);
 #define Codeur1_AF          GPIO_AF2_TIM4
 #define Codeur1_TIMER       TIM4
 
+#ifdef DISPLAY_ILI9341
+#define BUTTON_PIN1         GPIO_PIN_4
+#define BUTTON_GPIO			GPIOD
+#else
 #define BUTTON_PIN1         GPIO_PIN_8
 #define BUTTON_GPIO			GPIOB
+#endif
 
 static TIM_HandleTypeDef    tim_init;
 static TIM_Encoder_InitTypeDef encoder;
