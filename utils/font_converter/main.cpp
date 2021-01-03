@@ -1,7 +1,7 @@
 #include "convertfontdialog.h"
 #include <QApplication>
 
-#include "../../display/fonts/DefaultFonts.h"
+//#include "../../display/fonts/DefaultFonts.h"
 
 int main(int argc, char *argv[])
 {

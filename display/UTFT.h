@@ -1,5 +1,7 @@
 #pragma once
 
+#include "utf_font.h"
+
 #define UTFT_PORTRAIT 0
 #define UTFT_LANDSCAPE 1
 //rotate display to 180 degrees

@@ -7,13 +7,18 @@ DEPS += \
 	output/base/__/__/display/UTFT.d \
 	output/base/__/__/display/float_to_string.d \
 	output/base/__/__/display/utf_font.d \
-	output/base/__/__/display/fonts/DefaultFonts.d \
 	output/base/__/__/display/fonts/font_8x15.d \
 	output/base/__/__/display/fonts/font_big.d \
 	output/base/__/__/display/fonts/font_condensed30.d \
 	output/base/__/__/display/fonts/font_condensed59.d \
 	output/base/__/__/display/fonts/font_seven_seg.d \
 	output/base/__/__/display/fonts/font_small.d \
+	output/base/__/__/display/interface/interface.d \
+	output/base/__/__/display/interface/menu.d \
+	output/base/__/__/display/interface/plot.d \
+	output/base/__/__/display/interface/progress_bar.d \
+	output/base/__/__/display/interface/statusbar.d \
+	output/base/__/tests/menu_root.d \
 	output/base/__/tests/test_font.d \
 	output/base/__/tests/test_images.d \
 	output/base/__/tests/test_primitives.d \
@@ -55,13 +60,18 @@ OBJS += \
 	output/base/__/__/display/UTFT.o \
 	output/base/__/__/display/float_to_string.o \
 	output/base/__/__/display/utf_font.o \
-	output/base/__/__/display/fonts/DefaultFonts.o \
 	output/base/__/__/display/fonts/font_8x15.o \
 	output/base/__/__/display/fonts/font_big.o \
 	output/base/__/__/display/fonts/font_condensed30.o \
 	output/base/__/__/display/fonts/font_condensed59.o \
 	output/base/__/__/display/fonts/font_seven_seg.o \
 	output/base/__/__/display/fonts/font_small.o \
+	output/base/__/__/display/interface/interface.o \
+	output/base/__/__/display/interface/menu.o \
+	output/base/__/__/display/interface/plot.o \
+	output/base/__/__/display/interface/progress_bar.o \
+	output/base/__/__/display/interface/statusbar.o \
+	output/base/__/tests/menu_root.o \
 	output/base/__/tests/test_font.o \
 	output/base/__/tests/test_images.o \
 	output/base/__/tests/test_primitives.o \
@@ -111,10 +121,6 @@ output/base/__/__/display/utf_font.o: ./../../display/utf_font.c
 	@echo 'Building target: utf_font.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
-output/base/__/__/display/fonts/DefaultFonts.o: ./../../display/fonts/DefaultFonts.c
-	@echo 'Building target: DefaultFonts.c'
-	@$(CC) $(C_FLAGS) -o "$@" "$<"
-
 output/base/__/__/display/fonts/font_8x15.o: ./../../display/fonts/font_8x15.c
 	@echo 'Building target: font_8x15.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
@@ -137,6 +143,30 @@ output/base/__/__/display/fonts/font_seven_seg.o: ./../../display/fonts/font_sev
 
 output/base/__/__/display/fonts/font_small.o: ./../../display/fonts/font_small.c
 	@echo 'Building target: font_small.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/__/display/interface/interface.o: ./../../display/interface/interface.c
+	@echo 'Building target: interface.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/__/display/interface/menu.o: ./../../display/interface/menu.c
+	@echo 'Building target: menu.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/__/display/interface/plot.o: ./../../display/interface/plot.c
+	@echo 'Building target: plot.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/__/display/interface/progress_bar.o: ./../../display/interface/progress_bar.c
+	@echo 'Building target: progress_bar.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/__/display/interface/statusbar.o: ./../../display/interface/statusbar.c
+	@echo 'Building target: statusbar.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/tests/menu_root.o: ./../tests/menu_root.c
+	@echo 'Building target: menu_root.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
 output/base/__/tests/test_font.o: ./../tests/test_font.c

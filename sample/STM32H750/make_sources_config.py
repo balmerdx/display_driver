@@ -18,6 +18,7 @@ sources = [
 	"dirs" : [
 		"../../display",
 		"../../display/fonts",
+		"../../display/interface",
 		"../tests",
 		"Src",
 		"Src/hardware",

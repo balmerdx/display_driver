@@ -24,10 +24,10 @@
 #include "hardware/delay.h"
 #include "hardware/quadrature_encoder.h"
 #include "UTFT.h"
-#include "utf_font.h"
-#include "fonts/DefaultFonts.h"
+#include "interface/interface.h"
 #include "fonts/font_condensed30.h"
 #include "fonts/font_condensed59.h"
+#include "../../tests/menu_root.h"
 
 /* Private variables ---------------------------------------------------------*/
 
@@ -47,23 +47,29 @@ void PrintImages();
   */
 int main(void)
 {
-  /* MCU Configuration--------------------------------------------------------*/
+    /* MCU Configuration--------------------------------------------------------*/
 
-  HAL_Init();
+    HAL_Init();
 
-  SystemClock_Config400MHz();
+    SystemClock_Config400MHz();
 
-  DelayInit();
+    DelayInit();
 
-  MX_USB_DEVICE_Init();
-  MX_GPIO_Init();
+    MX_USB_DEVICE_Init();
+    MX_GPIO_Init();
 #ifdef DISPLAY_ILI9341
-  UTFT_InitLCD(UTFT_LANDSCAPE2);
+    UTFT_InitLCD(UTFT_LANDSCAPE2);
 #else
-  UTFT_InitLCD(UTFT_LANDSCAPE);
+    UTFT_InitLCD(UTFT_LANDSCAPE);
 #endif
 
-  QuadEncInit();
+    QuadEncInit();
+    MenuRootStart();
+    while (1)
+    {
+        HAL_Delay(1);
+        InterfaceQuant();
+    }
 
   if(0)
   { //Test LCD speed

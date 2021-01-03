@@ -1,10 +1,15 @@
 #include "UTFT.h"
+#include "interface/interface.h"
+#include "menu_root.h"
+
 #include "test_images/books_16.h"
 #include "test_images/books_4.h"
 #include "test_images/components_16.h"
 #include "test_images/components_4.h"
 #include "test_images/csound_16.h"
 #include "test_images/csound_4.h"
+
+static void SceneImagesQuant();
 
 void PrintImages()
 {
@@ -19,4 +24,19 @@ void PrintImages()
     UTFT_drawBitmap4(130, 70, &csound_4_img);
 
     UTFT_drawBitmapS(210, 10, &components_16_img, 2);
+}
+
+void SceneImagesStart()
+{
+    PrintImages();
+    InterfaceGoto(SceneImagesQuant);
+}
+
+void SceneImagesQuant()
+{
+    if(EncButtonPressed())
+    {
+        MenuRootStart();
+        return;
+    }
 }
