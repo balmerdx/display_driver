@@ -59,9 +59,8 @@ int main(void)
   MX_GPIO_Init();
 #ifdef DISPLAY_ILI9341
   UTFT_InitLCD(UTFT_LANDSCAPE2);
-  //UTFT_InitLCD(UTFT_PORTRAIT);
 #else
-    UTFT_InitLCD(UTFT_LANDSCAPE);
+  UTFT_InitLCD(UTFT_LANDSCAPE);
 #endif
 
   QuadEncInit();
@@ -71,12 +70,12 @@ int main(void)
       uint32_t start_ms = TimeMs();
       int count = 256;
       for(int i=0; i<count; i++)
-        UTFT_fillScrW(i);
+        UTFT_fillScr(i);
 
       uint32_t delta_ms = TimeMs()-start_ms;
 
-      UTFT_fillScrW(VGA_BLUE);
-      UTFT_setColorW(VGA_GREEN);
+      UTFT_fillScr(VGA_BLUE);
+      UTFT_setColor(VGA_GREEN);
       UTFT_fillRect(10,10, 20,20);
       UTF_SetFont(font_condensed59);
 
@@ -91,11 +90,11 @@ int main(void)
       }
   }
 
-  UTFT_fillScrW(VGA_BLUE);
+  UTFT_fillScr(VGA_BLUE);
 
   //DrawFontAlphabet();  while(1);
-  //DrawPrimitives(); while(1);
-  PrintImages(); while(1);
+  DrawPrimitives(); while(1);
+  //PrintImages(); while(1);
 
   UTF_SetFont(font_condensed30);
 

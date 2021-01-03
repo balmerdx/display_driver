@@ -12,11 +12,11 @@ void DrawFontAlphabet()
 
 #define DL(str) UTF_DrawStringJustify(0, y, str, UTFT_getDisplayXSize(), UTF_CENTER); \
         y+=UTF_Height();
-//    UTFT_setColorW(VGA_GREEN); UTFT_drawLine(0, y+UTF_Ascent(), UTFT_getDisplayXSize()-1, y+UTF_Ascent()); UTFT_setColorW(VGA_WHITE);
+//    UTFT_setColor(VGA_GREEN); UTFT_drawLine(0, y+UTF_Ascent(), UTFT_getDisplayXSize()-1, y+UTF_Ascent()); UTFT_setColor(VGA_WHITE);
 
     int y = 0;
-    UTFT_setBackColorW(VGA_BLACK);
-    UTFT_setColorW(VGA_WHITE);
+    UTFT_setBackColor(VGA_BLACK);
+    UTFT_setColor(VGA_WHITE);
 /*
     UTF_SetFont(font_small);
     DL(" !\"#$%&'()*+,-./0123456789:;<=>?");

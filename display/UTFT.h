@@ -1,16 +1,3 @@
-/*
- ILI9341 2.2 TFT SPI library
- based on UTFT.cpp - Arduino/chipKit library support for Color TFT LCD Boards
- Copyright (C)2010-2013 Henning Karlsen. All right reserved
- 
- Compatible with other UTFT libraries.
- 
- Original library you can find at http://electronics.henningkarlsen.com/
-  
- This library is free software; you can redistribute it and/or
- modify it under the terms of the CC BY-NC-SA 3.0 license.
- Please see the included documents for further information.
- */
 #pragma once
 
 #define UTFT_PORTRAIT 0
@@ -44,9 +31,6 @@
 #define UTFT_GREEN(color) (((uint16_t)color>>3)&252)
 #define UTFT_BLUE(color) (((uint16_t)color<<3)&248)
 
-
-#define bitmapdatatype uint16_t*
-
 typedef struct Bitmap16bit
 {
     uint16_t width;
@@ -63,11 +47,9 @@ typedef struct Bitmap4bit
 } Bitmap4bit;
 
 void UTFT_InitLCD(uint8_t orientation);
-void UTFT_clrScr();
 void UTFT_drawPixel(int x, int y);
 void UTFT_drawLine(int x1, int y1, int x2, int y2);
-void UTFT_fillScr(uint8_t r, uint8_t g, uint8_t b);
-void UTFT_fillScrW(uint16_t color);
+void UTFT_fillScr(uint16_t color);
 void UTFT_drawRect(int x1, int y1, int x2, int y2);
 void UTFT_drawRoundRect(int x1, int y1, int x2, int y2);
 void UTFT_fillRect(int x1, int y1, int x2, int y2);    //use foreground color
@@ -76,11 +58,12 @@ void UTFT_fillRoundRect(int x1, int y1, int x2, int y2);
 void UTFT_drawCircle(int x, int y, int radius);
 void UTFT_fillCircle(int x, int y, int radius);
 
-void UTFT_setColor(uint8_t r, uint8_t g, uint8_t b);
-void UTFT_setColorW(uint16_t color);
+//R,G,B to hi color
+uint16_t UTFT_color(uint8_t r, uint8_t g, uint8_t b);
+
+void UTFT_setColor(uint16_t color);
 uint16_t UTFT_getColor();
-void UTFT_setBackColor(uint8_t r, uint8_t g, uint8_t b);
-void UTFT_setBackColorW(uint32_t color);
+void UTFT_setBackColor(uint32_t color);
 uint16_t UTFT_getBackColor();
 
 void UTFT_drawBitmap(int x, int y, const Bitmap16bit* bitmap);
@@ -101,5 +84,3 @@ int	 UTFT_getDisplayYSize();
 void UTFT_verticalScrollDefinition(uint16_t topFixedArea, uint16_t verticalScrollArea, uint16_t bottomFixedArea);
 void UTFT_verticalScroll(uint16_t vsp);
 
-//R,G,B to hi color
-uint16_t UTFT_color(uint8_t r, uint8_t g, uint8_t b);

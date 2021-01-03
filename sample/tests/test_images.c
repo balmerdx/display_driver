@@ -8,7 +8,7 @@
 
 void PrintImages()
 {
-    UTFT_fillScrW(VGA_BLACK);
+    UTFT_fillScr(VGA_BLACK);
     UTFT_drawBitmap(10, 10, &books_16_img);
     UTFT_drawBitmap4(10, 70, &books_4_img);
 
