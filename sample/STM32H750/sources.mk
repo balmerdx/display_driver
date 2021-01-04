@@ -21,6 +21,7 @@ DEPS += \
 	output/base/__/tests/menu_root.d \
 	output/base/__/tests/test_font.d \
 	output/base/__/tests/test_images.d \
+	output/base/__/tests/test_plot.d \
 	output/base/__/tests/test_primitives.d \
 	output/base/__/tests/test_progressbar.d \
 	output/base/Src/main.d \
@@ -75,6 +76,7 @@ OBJS += \
 	output/base/__/tests/menu_root.o \
 	output/base/__/tests/test_font.o \
 	output/base/__/tests/test_images.o \
+	output/base/__/tests/test_plot.o \
 	output/base/__/tests/test_primitives.o \
 	output/base/__/tests/test_progressbar.o \
 	output/base/Src/main.o \
@@ -177,6 +179,10 @@ output/base/__/tests/test_font.o: ./../tests/test_font.c
 
 output/base/__/tests/test_images.o: ./../tests/test_images.c
 	@echo 'Building target: test_images.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/tests/test_plot.o: ./../tests/test_plot.c
+	@echo 'Building target: test_plot.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
 output/base/__/tests/test_primitives.o: ./../tests/test_primitives.c

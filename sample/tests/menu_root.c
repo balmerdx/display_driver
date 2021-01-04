@@ -11,8 +11,10 @@ enum
     MR_IMAGES,
     MR_PRIMITIVES,
     MR_PROGRESSBAR,
+    MR_PLOT,
 };
 
+static int last_menu_index = 0;
 
 void MenuRootStart()
 {
@@ -23,6 +25,9 @@ void MenuRootStart()
     MenuAdd("Images", MR_IMAGES);
     MenuAdd("Primitives", MR_PRIMITIVES);
     MenuAdd("Progressbar", MR_PROGRESSBAR);
+    MenuAdd("Plot", MR_PLOT);
+
+    MenuSetIndex(last_menu_index);
     MenuRedraw();
 
     InterfaceGoto(MenuRootQuant);
@@ -33,6 +38,8 @@ void MenuRootQuant()
     MenuQuant();
     if(!EncButtonPressed())
         return;
+
+    last_menu_index = MenuIndex();
 
     if(MenuData()==MR_FONTS)
     {
@@ -57,4 +64,11 @@ void MenuRootQuant()
         SceneProgressbarStart();
         return;
     }
+
+    if(MenuData()==MR_PLOT)
+    {
+        ScenePlotStart();
+        return;
+    }
+
 }

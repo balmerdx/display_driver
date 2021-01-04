@@ -48,6 +48,7 @@ typedef struct Bitmap4bit
     uint8_t colors[];
 } Bitmap4bit;
 
+//orientation - UTFT_PORTRAIT, UTFT_LANDSCAPE, UTFT_LANDSCAPE2
 void UTFT_InitLCD(uint8_t orientation);
 void UTFT_drawPixel(int x, int y);
 void UTFT_drawLine(int x1, int y1, int x2, int y2);
@@ -74,10 +75,13 @@ void UTFT_drawBitmap4(int x, int y, const Bitmap4bit* bitmap);
 //scaled image
 void UTFT_drawBitmapS(int x, int y, const Bitmap16bit* bitmap, int scale);
 
-
+//start unused function
 void UTFT_lcdOff();
 void UTFT_lcdOn();
 void UTFT_setContrast(char c);
+//end unused function
+
+//Выдаёт значения на 1 писель меньше полной ширины/высоты.
 int  UTFT_getDisplayXSize();
 int	 UTFT_getDisplayYSize();
 

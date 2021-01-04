@@ -6,3 +6,4 @@ void SceneFontsStart();
 void SceneImagesStart();
 void ScenePrimitivesStart();
 void SceneProgressbarStart();
+void ScenePlotStart();
