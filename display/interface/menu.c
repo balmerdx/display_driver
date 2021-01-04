@@ -12,8 +12,7 @@
 typedef struct MenuElem
 {
     char name[STATUSBAR_STR_LEN+1];
-    char hint1[STATUSBAR_STR_LEN+1];
-    char hint2[STATUSBAR_STR_LEN+1];
+    char hint[STATUSBAR_STR_LEN+1];
     int data;
 } MenuElem;
 
@@ -46,26 +45,16 @@ void MenuAdd(const char* name, int data)
     MenuAdd1(name, data, "");
 }
 
-void MenuAdd1(const char* name, int data, const char* hint1)
+void MenuAdd1(const char* name, int data, const char* hint)
 {
-    MenuAdd2(name, data, hint1, "");
-}
 
-void MenuAddX2(int data, const char* hint1, const char* hint2)
-{
-    MenuAdd2("", data, hint1, hint2);
-}
-
-void MenuAdd2(const char* name, int data, const char* hint1, const char* hint2)
-{
     if(menu_elem_count >= MENU_MAX_ELEMENTS)
         return;
     MenuElem* e = elems + menu_elem_count;
 
     strncpy(e->name, name, STATUSBAR_STR_LEN);
     e->data = data;
-    strncpy(e->hint1, hint1, STATUSBAR_STR_LEN);
-    strncpy(e->hint2, hint2, STATUSBAR_STR_LEN);
+    strncpy(e->hint, hint, STATUSBAR_STR_LEN);
 
     menu_elem_count++;
 }
@@ -104,7 +93,7 @@ void MenuRedrawElem(int idx)
 void MenuRedraw()
 {
     MenuElem* e = elems + menu_index;
-    StatusbarSetTextAndRedraw(e->hint1, e->hint2);
+    StatusbarSetTextAndRedraw(e->hint);
     HeaderRedraw();
 
     for(int i=0; i<menu_elem_count; i++)
@@ -138,7 +127,7 @@ void MenuQuant()
     MenuRedrawElem(menu_index);
 
     MenuElem* e = elems + menu_index;
-    StatusbarSetTextAndRedraw(e->hint1, e->hint2);
+    StatusbarSetTextAndRedraw(e->hint);
 }
 
 int MenuIndex()

@@ -5,11 +5,12 @@
 
 static void MenuRootQuant();
 
-enum SingleCalibrationEnum
+enum
 {
     MR_FONTS,
     MR_IMAGES,
     MR_PRIMITIVES,
+    MR_PROGRESSBAR,
 };
 
 
@@ -21,6 +22,7 @@ void MenuRootStart()
     MenuAdd("Fonts", MR_FONTS);
     MenuAdd("Images", MR_IMAGES);
     MenuAdd("Primitives", MR_PRIMITIVES);
+    MenuAdd("Progressbar", MR_PROGRESSBAR);
     MenuRedraw();
 
     InterfaceGoto(MenuRootQuant);
@@ -50,4 +52,9 @@ void MenuRootQuant()
         return;
     }
 
+    if(MenuData()==MR_PROGRESSBAR)
+    {
+        SceneProgressbarStart();
+        return;
+    }
 }

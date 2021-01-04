@@ -27,13 +27,13 @@ void DrawFontAlphabet()
         y+=UTF_Height();
 //    UTFT_setColor(VGA_GREEN); UTFT_drawLine(0, y+UTF_Ascent(), UTFT_getDisplayXSize()-1, y+UTF_Ascent()); UTFT_setColor(VGA_WHITE);
 
-    int y = 0;
+    int y = HeaderYEnd();
     UTFT_setBackColor(VGA_BLACK);
     UTFT_setColor(VGA_WHITE);
 
     if(font_idx==0)
     {
-        StatusbarSetText0("font_small");
+        StatusbarSetText("font_small");
         UTF_SetFont(font_small);
         DL(" !\"#$%&'()*+,-./0123456789:;<=>?");
         DL("@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_");
@@ -42,7 +42,7 @@ void DrawFontAlphabet()
 
     if(font_idx==1)
     {
-        StatusbarSetText0("font_big");
+        StatusbarSetText("font_big");
         UTF_SetFont(font_big);
         DL(" !\"#$%&'()*+,-./");
         DL("0123456789:;<=>?");
@@ -55,7 +55,7 @@ void DrawFontAlphabet()
 
     if(font_idx==2)
     {
-        StatusbarSetText0("font_8x15");
+        StatusbarSetText("font_8x15");
         UTF_SetFont(font_8x15);
         DL(" !\"#$%&'()*+,-./0123456789:;<=>?");
         DL("@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_");
@@ -64,14 +64,14 @@ void DrawFontAlphabet()
 
     if(font_idx==3)
     {
-        StatusbarSetText0("font_seven_seg");
+        StatusbarSetText("font_seven_seg");
         UTF_SetFont(font_seven_seg);
         DL("0123456789");
     }
 
     if(font_idx==4)
     {
-        StatusbarSetText0("font_condensed30");
+        StatusbarSetText("font_condensed30");
         UTF_SetFont(font_condensed30);
         DL(" !\"#$%&'()*+,-./0123456789:;<=>?");
         DL("()*+,-./0123456789:;<=>?");
@@ -81,20 +81,21 @@ void DrawFontAlphabet()
 
     if(font_idx==5)
     {
-        StatusbarSetText0("font_condensed59");
+        StatusbarSetText("font_condensed59");
         UTF_SetFont(font_condensed59);
         DL(" -.0123456789");
     }
 
     UTFT_fillRectBack(0, y, UTFT_getDisplayXSize(), StatusbarYMin()-1);
     StatusbarRedraw();
+    HeaderRedraw();
 #undef DL
 }
 
 void SceneFontsStart()
 {
     UTFT_setBackColor(VGA_BLACK);
-    StatusbarSetText1("View fonts");
+    HeaderSetText("View fonts");
     DrawFontAlphabet();
 
     InterfaceGoto(SceneFontsQuant);

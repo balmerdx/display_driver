@@ -16,6 +16,7 @@
 ../tests/test_font.c
 ../tests/test_images.c
 ../tests/test_primitives.c
+../tests/test_progressbar.c
 Src/main.c
 Src/stm32h7xx_hal_msp.c
 Src/stm32h7xx_it.c

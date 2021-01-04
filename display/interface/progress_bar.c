@@ -65,7 +65,7 @@ void ProgressSetPos(float pos)
     } else
     {
         UTFT_setColor(g_background_progress);
-        UTFT_fillRect(g_x+x_cur+1, g_ymin, g_x+x_last, g_ymax);
+        UTFT_fillRect(g_x+x_cur, g_ymin, g_x+x_last, g_ymax);
     }
 
 }

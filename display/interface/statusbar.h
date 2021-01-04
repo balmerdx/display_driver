@@ -1,7 +1,7 @@
 #pragma once
 
-// Статусбар занимает две нижние строчки.
-// Позволяет выводить на них текст.
+// Статусбар занимает одну нижнюю строчку.
+// Header занимает одну верхнюю строку.
 
 #include "colors.h"
 
@@ -16,10 +16,9 @@ void CopyText(char data[STATUSBAR_STR_LEN+1], const char* text, int start_spaces
 //internal call UTFT_setFont
 int StatusbarYMin();
 
-void StatusbarSetTextAndRedraw(const char* text0, const char* text1);
+void StatusbarSetTextAndRedraw(const char* text);
 
-void StatusbarSetText0(const char* text0);
-void StatusbarSetText1(const char* text1);
+void StatusbarSetText(const char* text);
 
 void StatusbarRedraw();
 

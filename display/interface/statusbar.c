@@ -4,8 +4,7 @@
 
 extern const uint32_t* g_default_font;
 
-static char g_text0[STATUSBAR_STR_LEN+1] = {0};
-static char g_text1[STATUSBAR_STR_LEN+1] = {0};
+static char g_statusbar_text[STATUSBAR_STR_LEN+1] = {0};
 static char g_header_text[STATUSBAR_STR_LEN+1] = {0};
 
 void CopyText(char data[STATUSBAR_STR_LEN+1], const char* text, int start_spaces)
@@ -23,7 +22,7 @@ void CopyText(char data[STATUSBAR_STR_LEN+1], const char* text, int start_spaces
 int StatusbarYMin()
 {
     UTF_SetFont(g_default_font);
-    return UTFT_getDisplayYSize() - UTF_Height()*2;
+    return UTFT_getDisplayYSize() - UTF_Height();
 }
 
 void StatusbarCopyText(char* data, const char* text)
@@ -34,36 +33,27 @@ void StatusbarCopyText(char* data, const char* text)
 
 void StatusbarRedrawX(int idx)
 {
-    char* text = idx==0?g_text0:g_text1;
-    int y = StatusbarYMin();
-    y += idx*UTF_Height();
-    UTFT_setColor(VGA_WHITE);
-    UTFT_setBackColor(STATUSBAR_BACKGROUND);
-    //UTFT_print(text, 0, y);
-    UTF_DrawStringJustify(0, y, text, UTFT_getDisplayXSize(), UTF_CENTER);
 }
 
-void StatusbarSetTextAndRedraw(const char* text0, const char* text1)
+void StatusbarSetTextAndRedraw(const char* text)
 {
-    StatusbarSetText0(text0);
-    StatusbarSetText1(text1);
+    StatusbarSetText(text);
     StatusbarRedraw();
 }
 
-void StatusbarSetText0(const char* text0)
+void StatusbarSetText(const char* text)
 {
-    StatusbarCopyText(g_text0, text0);
+    StatusbarCopyText(g_statusbar_text, text);
 }
 
-void StatusbarSetText1(const char* text1)
-{
-    StatusbarCopyText(g_text1, text1);
-}
 
 void StatusbarRedraw()
 {
-    StatusbarRedrawX(0);
-    StatusbarRedrawX(1);
+    char* text = g_statusbar_text;
+    int y = StatusbarYMin();
+    UTFT_setColor(VGA_WHITE);
+    UTFT_setBackColor(STATUSBAR_BACKGROUND);
+    UTF_DrawStringJustify(0, y, text, UTFT_getDisplayXSize(), UTF_CENTER);
 }
 
 int HeaderYEnd()

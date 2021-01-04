@@ -18,9 +18,7 @@ void MenuRedraw();
 //data - пользовательские данные
 //hint1, hint2 - подсказки в statusbar
 void MenuAdd(const char* name, int data);
-void MenuAdd1(const char* name, int data, const char* hint1);
-void MenuAdd2(const char* name, int data, const char* hint1, const char* hint2);
-void MenuAddX2(int data, const char* hint1, const char* hint2);
+void MenuAdd1(const char* name, int data, const char* hint);
 
 //Изменяем имя для уже существующего пункта меню
 void MenuSetNameAndUpdate(int idx, const char* name);
