@@ -9,6 +9,11 @@
  * меню
  * отрисовка графиков
 
+Пару картинок железок сделанных на её основе
+![RLC Meter H750](https://github.com/balmerdx/RLCMeterH750/blob/master/misc/img/device.jpg)
+![BalmerDX VNA](https://raw.githubusercontent.com/balmerdx/BalmerDX_VNA/master/doc/wiki_img/home/vna_front.JPG)
+
+
 
 Ниже приведу копирайты оригинальной библиотеки, от которой осталось в моем коде ооочень-очень мало.
 Мало осталось, потому как сначала код был портирован с С++ на С (без плюсов).
