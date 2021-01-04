@@ -78,7 +78,5 @@ void HeaderRedraw()
     UTF_SetFont(g_default_font);
     UTFT_setColor(VGA_WHITE);
     UTFT_setBackColor(STATUSBAR_BACKGROUND);
-    UTF_DrawString(0, 0, g_header_text);
-
     UTF_DrawStringJustify(0, 0, g_header_text, UTFT_getDisplayXSize(), UTF_CENTER);
 }
