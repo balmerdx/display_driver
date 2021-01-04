@@ -73,10 +73,13 @@ void DrawFontAlphabet()
     {
         StatusbarSetText("font_condensed30");
         UTF_SetFont(font_condensed30);
-        DL(" !\"#$%&'()*+,-./0123456789:;<=>?");
-        DL("()*+,-./0123456789:;<=>?");
-        DL("@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_");
-        DL("`abcdefghijklmnopqrstuvwxyz{|}~ ");
+        DL(" !\"#$%&'()*+,-./0123456789");
+        DL(":;<=>?@ABCDEFGHIJKLMNOP");
+        DL("QRSTUVWXYZ[\\]^_`abcdefghi");
+        DL("jklmnopqrstuvwxyz{|}~ ");
+        DL("АБВГДЕЖЗИЙКЛМНОПРСТУФХ");
+        DL("ЦЧШЩЪЫЬЭЮЯабвгдежзийклм");
+        DL("нопрстуфхцчшщъыьэюя");
     }
 
     if(font_idx==5)
