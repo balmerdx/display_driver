@@ -41,6 +41,7 @@ void UTFT_drawUtfChar1bit(int x, int y, int char_width, int char_height, uint32_
 void UTFT_drawUtfChar2bit(int x, int y, int char_width, int char_height, uint32_t* data, int top_space, int bottom_space, uint16_t palette[4]);
 const char* UTF_UTF8to16(const char* in, uint16_t* out_symbol);
 void UTF_CalcPalette2bit(uint16_t palette[4]);
+static int UTF_DrawStringInternal(int x, int y, const char* str, int max_x);
 
 extern uint32_t* utf_current_font;//defined in UTFT
 
@@ -79,6 +80,11 @@ void UTF_SetFont(const uint32_t* font)
 
 int UTF_DrawString(int x, int y, const char* str)
 {
+    return UTF_DrawStringInternal(x, y, str, UTFT_getDisplayXSize()-1);
+}
+
+int UTF_DrawStringInternal(int x, int y, const char* str, int max_x)
+{
     if(utf_current_font==0)
         return x;
 
@@ -105,6 +111,13 @@ int UTF_DrawString(int x, int y, const char* str)
         {
             UTFT_fillRectBack(x, y, x+dx_fill-1, y+h->height-1);
             x += dx_fill;
+        }
+
+        if(x+info->width-1 > max_x)
+        {
+            UTFT_fillRectBack(x, y, max_x, y+h->height-1);
+            x = max_x+1;
+            break;
         }
 
         if(h->bits_per_pixel==2)
@@ -279,24 +292,32 @@ int UTF_DrawStringJustify(int x, int y, const char* str, int width, UTF_JUSTIFY 
     if(utf_current_font==0)
         return x;
 
+    int max_x = x + width;
+    if(max_x > UTFT_getDisplayXSize())
+        max_x = UTFT_getDisplayXSize();
+    max_x -= 1;
+
+
     int dx = UTF_StringWidth(str);
     int height = UTF_Height();
+    int end_x;
     if(dx>=width)
     {
-        return UTF_DrawString(x, y, str);
+        return UTF_DrawStringInternal(x, y, str, max_x);
     }
 
     switch(justify)
     {
     case UTF_LEFT:
-        UTF_DrawString(x, y, str);
-        UTFT_fillRectBack(x+dx, y, x+width-1, y+height-1);
+        end_x = UTF_DrawStringInternal(x, y, str, max_x);
+        if(end_x <= max_x)
+            UTFT_fillRectBack(end_x, y, max_x, y+height-1);
         break;
     case UTF_RIGHT:
         {
             int fill_width = width-dx;
             UTFT_fillRectBack(x, y, x+fill_width-1, y+height-1);
-            UTF_DrawString(x+fill_width, y, str);
+            end_x = UTF_DrawStringInternal(x+fill_width, y, str, max_x);
         }
         break;
     case UTF_CENTER:
@@ -305,13 +326,14 @@ int UTF_DrawStringJustify(int x, int y, const char* str, int width, UTF_JUSTIFY 
             UTFT_fillRectBack(x, y, x+fill_width-1, y+height-1);
             x += fill_width;
             width -= fill_width;
-            UTF_DrawString(x, y, str);
-            UTFT_fillRectBack(x+dx, y, x+width-1, y+height-1);
+            end_x = UTF_DrawStringInternal(x, y, str, max_x);
+            if(end_x <= max_x)
+                UTFT_fillRectBack(end_x, y, max_x, y+height-1);
         }
         break;
     }
 
-    return x+width;
+    return max_x+1;
 }
 
 int UTF_printNumI(long num, int x, int y, int width, UTF_JUSTIFY justify)

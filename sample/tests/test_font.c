@@ -20,7 +20,7 @@ enum
     FONT_COUNT = 6
 };
 
-void DrawFontAlphabet()
+static void DrawFontAlphabet()
 {
 
 #define DL(str) UTF_DrawStringJustify(0, y, str, UTFT_getDisplayXSize(), UTF_CENTER); \
@@ -97,7 +97,6 @@ void DrawFontAlphabet()
 
 void SceneFontsStart()
 {
-    UTFT_setBackColor(VGA_BLACK);
     HeaderSetText("View fonts");
     DrawFontAlphabet();
 

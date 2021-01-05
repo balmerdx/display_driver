@@ -12,11 +12,12 @@ typedef enum UTF_JUSTIFY
 void UTF_SetFont(const uint32_t* font);
 
 //x,y - левый верхний угол строки
-//return x+UTF_StringWidth(str)
+//return x+UTF_StringWidth(str) либо конец экрана, если строка выходит за него
 int UTF_DrawString(int x, int y, const char* str);
 
 //width - ширина заполняемой области
 //если текст меньше этой ширины, то дополнительное место заполняется пустотой
+//если больше ширины, то обрезается текст
 //justify - с какой стороны распологается текст в интервале от x до x+width
 int UTF_DrawStringJustify(int x, int y, const char* str, int width, UTF_JUSTIFY justify);
 

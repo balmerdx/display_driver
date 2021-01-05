@@ -31,10 +31,6 @@ void StatusbarCopyText(char* data, const char* text)
     strncpy(data, text, STATUSBAR_STR_LEN);
 }
 
-void StatusbarRedrawX(int idx)
-{
-}
-
 void StatusbarSetTextAndRedraw(const char* text)
 {
     StatusbarSetText(text);

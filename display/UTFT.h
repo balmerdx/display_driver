@@ -81,7 +81,7 @@ void UTFT_lcdOn();
 void UTFT_setContrast(char c);
 //end unused function
 
-//Выдаёт значения на 1 писель меньше полной ширины/высоты.
+//Выдаёт ширину/высоту экрана 320x240 или 480x320
 int  UTFT_getDisplayXSize();
 int	 UTFT_getDisplayYSize();
 

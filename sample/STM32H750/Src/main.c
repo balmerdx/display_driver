@@ -64,7 +64,9 @@ int main(void)
 #endif
 
     QuadEncInit();
+    g_default_font = font_condensed30;
     MenuRootStart();
+    //SceneStringJustifyStart();
     while (1)
     {
         HAL_Delay(1);

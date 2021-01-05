@@ -24,6 +24,7 @@ DEPS += \
 	output/base/__/tests/test_plot.d \
 	output/base/__/tests/test_primitives.d \
 	output/base/__/tests/test_progressbar.d \
+	output/base/__/tests/test_string_justify.d \
 	output/base/Src/main.d \
 	output/base/Src/stm32h7xx_hal_msp.d \
 	output/base/Src/stm32h7xx_it.d \
@@ -79,6 +80,7 @@ OBJS += \
 	output/base/__/tests/test_plot.o \
 	output/base/__/tests/test_primitives.o \
 	output/base/__/tests/test_progressbar.o \
+	output/base/__/tests/test_string_justify.o \
 	output/base/Src/main.o \
 	output/base/Src/stm32h7xx_hal_msp.o \
 	output/base/Src/stm32h7xx_it.o \
@@ -191,6 +193,10 @@ output/base/__/tests/test_primitives.o: ./../tests/test_primitives.c
 
 output/base/__/tests/test_progressbar.o: ./../tests/test_progressbar.c
 	@echo 'Building target: test_progressbar.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/tests/test_string_justify.o: ./../tests/test_string_justify.c
+	@echo 'Building target: test_string_justify.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
 output/base/Src/main.o: ./Src/main.c

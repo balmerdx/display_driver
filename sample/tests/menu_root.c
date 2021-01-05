@@ -12,20 +12,20 @@ enum
     MR_PRIMITIVES,
     MR_PROGRESSBAR,
     MR_PLOT,
+    MR_STRING_JUSTIFY,
 };
 
 static int last_menu_index = 0;
 
 void MenuRootStart()
 {
-    g_default_font = font_condensed30;
-
-    MenuReset("Testing graph libraty");
+    MenuReset2("Testing graph libraty");
     MenuAdd("Fonts", MR_FONTS);
     MenuAdd("Images", MR_IMAGES);
     MenuAdd("Primitives", MR_PRIMITIVES);
     MenuAdd("Progressbar", MR_PROGRESSBAR);
     MenuAdd("Plot", MR_PLOT);
+    MenuAdd("String justify", MR_STRING_JUSTIFY);
 
     MenuSetIndex(last_menu_index);
     MenuRedraw();
@@ -68,6 +68,12 @@ void MenuRootQuant()
     if(MenuData()==MR_PLOT)
     {
         ScenePlotStart();
+        return;
+    }
+
+    if(MenuData()==MR_STRING_JUSTIFY)
+    {
+        SceneStringJustifyStart();
         return;
     }
 
