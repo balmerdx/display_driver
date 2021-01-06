@@ -2,6 +2,7 @@
 #include "UTFT.h"
 #include "progress_bar.h"
 #include "colors.h"
+#include "float_to_string.h"
 #include "fonts/font_8x15.h"
 
 #include <math.h>
@@ -36,6 +37,7 @@ static uint16_t g_background_color = VGA_BLACK;
 static uint16_t g_outline_color = COLOR_FOREGROUND_DARK_GRAY;
 
 static uint16_t g_left_axe_chars = 5;
+static uint16_t g_bottom_axe_chars = 3;
 
 static float g_xmin = 0;
 static float g_xmax = 1;
@@ -225,6 +227,8 @@ void PlotSetAxis(float xmin, float xmax, float ymin, float ymax)
     int g_plot_xmax = g_plot_x + g_plot_dx;
     int g_plot_ymax = g_plot_y + g_plot_dy;
 
+    char st[27];
+
     {//Make labels Y
         int tick_ymin = 0;
         int tick_ymax = 10;
@@ -246,7 +250,8 @@ void PlotSetAxis(float xmin, float xmax, float ymin, float ymax)
             int y = PlotFloatToScreenY(value);
 
             UTFT_setColor(VGA_WHITE);
-            UTF_printNumF(value, g_full_x, y-fonty/2, float_places, g_left_axe_chars, UTF_RIGHT);
+            floatToString(st, 27, value, float_places, g_left_axe_chars, true);
+            UTF_DrawString(g_full_x, y-fonty/2, st);
 
             PlotAddTicks(g_plot_x+1, y, g_plot_x+tick_len, y);
             PlotAddTicks(g_plot_xmax-1, y, g_plot_xmax-tick_len, y);
@@ -266,7 +271,7 @@ void PlotSetAxis(float xmin, float xmax, float ymin, float ymax)
                       &tick_delta, &tick_mul, &float_places);
 
         float t_mul = tick_mul;
-        float_places = 0;
+        //float_places = 0;
         if(tick_mul>99e3)
         {
             t_mul = tick_mul/1e6;
@@ -280,12 +285,13 @@ void PlotSetAxis(float xmin, float xmax, float ymin, float ymax)
             float value = t*tick_mul;
             int x = PlotFloatToScreenX(value);
             int num_len = 2;
-            int start_label_x = x-fontx*3/2;
+            int start_label_x = x-fontx*g_bottom_axe_chars/2;
             if(start_label_x+num_len*fontx > g_plot_xmax)
                 continue;
 
             UTFT_setColor(VGA_WHITE);
-            UTF_printNumF(t*t_mul, start_label_x, g_plot_ymax+2, float_places, 3, UTF_RIGHT);
+            floatToString(st, 27, t*t_mul, float_places, g_bottom_axe_chars, true);
+            UTF_DrawString(start_label_x, g_plot_ymax+2, st);
 
             PlotAddTicks(x, g_plot_ymax-1, x, g_plot_ymax-tick_len);
             PlotAddTicks(x, g_plot_y+1, x, g_plot_y+tick_len);
