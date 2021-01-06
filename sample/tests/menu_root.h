@@ -8,3 +8,5 @@ void ScenePrimitivesStart();
 void SceneProgressbarStart();
 void ScenePlotStart();
 void SceneStringJustifyStart();
+void SceneScrollStart();
+void SceneFpsStart();

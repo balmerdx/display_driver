@@ -66,62 +66,12 @@ int main(void)
     QuadEncInit();
     g_default_font = font_condensed30;
     MenuRootStart();
-    //SceneStringJustifyStart();
+
     while (1)
     {
         HAL_Delay(1);
         InterfaceQuant();
     }
-
-  if(0)
-  { //Test LCD speed
-      uint32_t start_ms = TimeMs();
-      int count = 256;
-      for(int i=0; i<count; i++)
-        UTFT_fillScr(i);
-
-      uint32_t delta_ms = TimeMs()-start_ms;
-
-      UTFT_fillScr(VGA_BLUE);
-      UTFT_setColor(VGA_GREEN);
-      UTFT_fillRect(10,10, 20,20);
-      UTF_SetFont(font_condensed59);
-
-      int x = 0, y = 100;
-      x = UTF_printNumF(count*1000.f/delta_ms, x, y, 3, 100, UTF_RIGHT);
-      UTF_SetFont(font_condensed30);
-      UTF_DrawString(x, y, " FPS");
-
-      while(1)
-      {
-
-      }
-  }
-
-  UTFT_fillScr(VGA_BLUE);
-
-  //DrawFontAlphabet();  while(1);
-  DrawPrimitives(); while(1);
-  //PrintImages(); while(1);
-
-  UTF_SetFont(font_condensed30);
-
-  while(1)
-  {
-      int16_t value = QuadEncValue();
-      int xstart = 0;
-      int x = xstart, y = 100;
-      x = UTF_printNumI(value, x, y, 100, UTF_RIGHT);
-      UTF_SetFont(font_condensed30);
-      UTF_DrawString(x, y, " ENC");
-
-      y += UTF_Height();
-
-      x = xstart;
-      UTF_DrawString(x, y, QuadEncButton()?"P":"X");
-
-      HAL_Delay(30);
-  }
 }
 
 

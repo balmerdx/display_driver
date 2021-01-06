@@ -14,10 +14,12 @@
 ../../display/interface/statusbar.c
 ../tests/menu_root.c
 ../tests/test_font.c
+../tests/test_fps.c
 ../tests/test_images.c
 ../tests/test_plot.c
 ../tests/test_primitives.c
 ../tests/test_progressbar.c
+../tests/test_scroll.c
 ../tests/test_string_justify.c
 Src/main.c
 Src/stm32h7xx_hal_msp.c

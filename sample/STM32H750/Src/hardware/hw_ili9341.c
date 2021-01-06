@@ -73,7 +73,7 @@ void HwLcdInit()
     HAL_GPIO_Init(TFT_PORT_CS, &gpio);
 
     SpiHandle.Instance               = TFT_SPI;
-    SpiHandle.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
+    SpiHandle.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
     SpiHandle.Init.Direction         = SPI_DIRECTION_2LINES;
     SpiHandle.Init.CLKPhase          = SPI_PHASE_1EDGE;
     SpiHandle.Init.CLKPolarity       = SPI_POLARITY_LOW;

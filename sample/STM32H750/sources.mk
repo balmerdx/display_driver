@@ -20,10 +20,12 @@ DEPS += \
 	output/base/__/__/display/interface/statusbar.d \
 	output/base/__/tests/menu_root.d \
 	output/base/__/tests/test_font.d \
+	output/base/__/tests/test_fps.d \
 	output/base/__/tests/test_images.d \
 	output/base/__/tests/test_plot.d \
 	output/base/__/tests/test_primitives.d \
 	output/base/__/tests/test_progressbar.d \
+	output/base/__/tests/test_scroll.d \
 	output/base/__/tests/test_string_justify.d \
 	output/base/Src/main.d \
 	output/base/Src/stm32h7xx_hal_msp.d \
@@ -76,10 +78,12 @@ OBJS += \
 	output/base/__/__/display/interface/statusbar.o \
 	output/base/__/tests/menu_root.o \
 	output/base/__/tests/test_font.o \
+	output/base/__/tests/test_fps.o \
 	output/base/__/tests/test_images.o \
 	output/base/__/tests/test_plot.o \
 	output/base/__/tests/test_primitives.o \
 	output/base/__/tests/test_progressbar.o \
+	output/base/__/tests/test_scroll.o \
 	output/base/__/tests/test_string_justify.o \
 	output/base/Src/main.o \
 	output/base/Src/stm32h7xx_hal_msp.o \
@@ -179,6 +183,10 @@ output/base/__/tests/test_font.o: ./../tests/test_font.c
 	@echo 'Building target: test_font.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
+output/base/__/tests/test_fps.o: ./../tests/test_fps.c
+	@echo 'Building target: test_fps.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
 output/base/__/tests/test_images.o: ./../tests/test_images.c
 	@echo 'Building target: test_images.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
@@ -193,6 +201,10 @@ output/base/__/tests/test_primitives.o: ./../tests/test_primitives.c
 
 output/base/__/tests/test_progressbar.o: ./../tests/test_progressbar.c
 	@echo 'Building target: test_progressbar.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/tests/test_scroll.o: ./../tests/test_scroll.c
+	@echo 'Building target: test_scroll.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
 output/base/__/tests/test_string_justify.o: ./../tests/test_string_justify.c

@@ -13,6 +13,8 @@ enum
     MR_PROGRESSBAR,
     MR_PLOT,
     MR_STRING_JUSTIFY,
+    MR_SCROLL,
+    MR_FPS,
 };
 
 static int last_menu_index = 0;
@@ -26,6 +28,8 @@ void MenuRootStart()
     MenuAdd("Progressbar", MR_PROGRESSBAR);
     MenuAdd("Plot", MR_PLOT);
     MenuAdd("String justify", MR_STRING_JUSTIFY);
+    MenuAdd("Scroll", MR_SCROLL);
+    MenuAdd("FPS", MR_FPS);
 
     MenuSetIndex(last_menu_index);
     MenuRedraw();
@@ -74,6 +78,18 @@ void MenuRootQuant()
     if(MenuData()==MR_STRING_JUSTIFY)
     {
         SceneStringJustifyStart();
+        return;
+    }
+
+    if(MenuData()==MR_SCROLL)
+    {
+        SceneScrollStart();
+        return;
+    }
+
+    if(MenuData()==MR_FPS)
+    {
+        SceneFpsStart();
         return;
     }
 
