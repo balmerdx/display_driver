@@ -10,3 +10,4 @@ void ScenePlotStart();
 void SceneStringJustifyStart();
 void SceneScrollStart();
 void SceneFpsStart();
+void SceneRectUtilsStart();

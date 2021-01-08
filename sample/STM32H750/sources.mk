@@ -17,6 +17,7 @@ DEPS += \
 	output/base/__/__/display/interface/menu.d \
 	output/base/__/__/display/interface/plot.d \
 	output/base/__/__/display/interface/progress_bar.d \
+	output/base/__/__/display/interface/rect_utils.d \
 	output/base/__/__/display/interface/statusbar.d \
 	output/base/__/tests/menu_root.d \
 	output/base/__/tests/test_font.d \
@@ -25,6 +26,7 @@ DEPS += \
 	output/base/__/tests/test_plot.d \
 	output/base/__/tests/test_primitives.d \
 	output/base/__/tests/test_progressbar.d \
+	output/base/__/tests/test_rect_utils.d \
 	output/base/__/tests/test_scroll.d \
 	output/base/__/tests/test_string_justify.d \
 	output/base/Src/main.d \
@@ -75,6 +77,7 @@ OBJS += \
 	output/base/__/__/display/interface/menu.o \
 	output/base/__/__/display/interface/plot.o \
 	output/base/__/__/display/interface/progress_bar.o \
+	output/base/__/__/display/interface/rect_utils.o \
 	output/base/__/__/display/interface/statusbar.o \
 	output/base/__/tests/menu_root.o \
 	output/base/__/tests/test_font.o \
@@ -83,6 +86,7 @@ OBJS += \
 	output/base/__/tests/test_plot.o \
 	output/base/__/tests/test_primitives.o \
 	output/base/__/tests/test_progressbar.o \
+	output/base/__/tests/test_rect_utils.o \
 	output/base/__/tests/test_scroll.o \
 	output/base/__/tests/test_string_justify.o \
 	output/base/Src/main.o \
@@ -171,6 +175,10 @@ output/base/__/__/display/interface/progress_bar.o: ./../../display/interface/pr
 	@echo 'Building target: progress_bar.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
+output/base/__/__/display/interface/rect_utils.o: ./../../display/interface/rect_utils.c
+	@echo 'Building target: rect_utils.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
 output/base/__/__/display/interface/statusbar.o: ./../../display/interface/statusbar.c
 	@echo 'Building target: statusbar.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
@@ -201,6 +209,10 @@ output/base/__/tests/test_primitives.o: ./../tests/test_primitives.c
 
 output/base/__/tests/test_progressbar.o: ./../tests/test_progressbar.c
 	@echo 'Building target: test_progressbar.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/tests/test_rect_utils.o: ./../tests/test_rect_utils.c
+	@echo 'Building target: test_rect_utils.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
 output/base/__/tests/test_scroll.o: ./../tests/test_scroll.c

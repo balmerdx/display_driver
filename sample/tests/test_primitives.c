@@ -57,5 +57,4 @@ void ScenePrimitivesQuant()
         MenuRootStart();
         return;
     }
-
 }

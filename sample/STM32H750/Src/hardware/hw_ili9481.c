@@ -68,10 +68,9 @@ void HwLcdPinLed(uint8_t on)
 
 }
 
-uint8_t HwLcdSend(uint8_t data)
+void HwLcdSend(uint8_t data)
 {
     HwLcdSend16NoWait(data);
-    return 0;
 }
 
 #endif//DISPLAY_ILI9481

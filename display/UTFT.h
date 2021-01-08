@@ -1,5 +1,5 @@
 #pragma once
-
+#include <stdint.h>
 #include "utf_font.h"
 
 #define UTFT_PORTRAIT 0
@@ -21,7 +21,7 @@
 #define VGA_MAROON		0x8000
 #define VGA_YELLOW		0xFFE0
 #define VGA_OLIVE		0x8400
-#define VGA_LIME		0x07E0
+#define VGA_LIME		0x04E0
 #define VGA_AQUA		0x07FF
 #define VGA_TEAL		0x0410
 #define VGA_NAVY		0x0010

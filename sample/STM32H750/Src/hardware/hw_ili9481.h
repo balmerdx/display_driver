@@ -16,7 +16,7 @@ void HwLcdPinCE(uint8_t on);
 void HwLcdPinDC(uint8_t on);
 void HwLcdPinRst(uint8_t on);
 void HwLcdPinLed(uint8_t on);
-uint8_t HwLcdSend(uint8_t data); //send spi data
+void HwLcdSend(uint8_t data); //send spi data
 
 //void HwLcdSend16NoWait(uint16_t data);
 void HwLcdWait();//Wait send complete

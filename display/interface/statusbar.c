@@ -1,8 +1,6 @@
 #include "statusbar.h"
-#include "UTFT.h"
+#include "interface.h"
 #include <string.h>
-
-extern const uint32_t* g_default_font;
 
 static char g_statusbar_text[STATUSBAR_STR_LEN+1] = {0};
 static char g_header_text[STATUSBAR_STR_LEN+1] = {0};

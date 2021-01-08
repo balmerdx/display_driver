@@ -15,6 +15,7 @@ enum
     MR_STRING_JUSTIFY,
     MR_SCROLL,
     MR_FPS,
+    MR_RECT_UTILS,
 };
 
 static int last_menu_index = 0;
@@ -30,6 +31,7 @@ void MenuRootStart()
     MenuAdd("String justify", MR_STRING_JUSTIFY);
     MenuAdd("Scroll", MR_SCROLL);
     MenuAdd("FPS", MR_FPS);
+    MenuAdd("Rect utils", MR_RECT_UTILS);
 
     MenuSetIndex(last_menu_index);
     MenuRedraw();
@@ -90,6 +92,12 @@ void MenuRootQuant()
     if(MenuData()==MR_FPS)
     {
         SceneFpsStart();
+        return;
+    }
+
+    if(MenuData()==MR_RECT_UTILS)
+    {
+        SceneRectUtilsStart();
         return;
     }
 
