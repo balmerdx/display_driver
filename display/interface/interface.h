@@ -4,7 +4,7 @@
 
 //Фонт, которым рисуются menu/statusbar/
 //Эту переменную надо инициализировать в самом начале программы, до того, как начал использоваться какой либо интерфейс.
-const uint32_t* g_default_font;
+extern const uint32_t* g_default_font;
 
 typedef void (*SceneQuantHandler)();
 typedef void (*SceneStartHandler)();

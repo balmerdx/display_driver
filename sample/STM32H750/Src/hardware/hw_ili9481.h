@@ -30,7 +30,6 @@ inline void HwLcdSend16NoWait(uint16_t data)
 {
     TFT_DATA_PORT->ODR = data;
     TFT_PORT_WR->BSRR = (uint32_t)PIN_WR << 16;
-    //__asm__ volatile("mov r0, r0");
     TFT_PORT_WR->BSRR = (uint32_t)PIN_WR;
 }
 
