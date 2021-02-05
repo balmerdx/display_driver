@@ -540,9 +540,9 @@ uint16_t UTFT_getColor()
     return front_color;
 }
 
-void UTFT_setBackColor(uint32_t color)
+void UTFT_setBackColor(uint16_t color)
 {
-    back_color = (uint16_t)color;
+    back_color = color;
 }
 
 uint16_t UTFT_getBackColor()

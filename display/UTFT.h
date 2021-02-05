@@ -66,7 +66,7 @@ uint16_t UTFT_color(uint8_t r, uint8_t g, uint8_t b);
 
 void UTFT_setColor(uint16_t color);
 uint16_t UTFT_getColor();
-void UTFT_setBackColor(uint32_t color);
+void UTFT_setBackColor(uint16_t color);
 uint16_t UTFT_getBackColor();
 
 void UTFT_drawBitmap(int x, int y, const Bitmap16bit* bitmap);

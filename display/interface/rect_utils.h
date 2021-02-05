@@ -4,9 +4,9 @@
  */
 #include "UTFT.h"
 
-
 //RectA - прямоугольник с указанием на какой высоте рисовать фонты.
 //Если ascent==y, то на не известно на какой высоте рисовать
+//Использует текущий фонт для определения ascent
 typedef struct
 {
     int16_t x;
@@ -14,6 +14,7 @@ typedef struct
     int16_t width;
     int16_t height;
     int16_t ascent;
+    int16_t back_color;
 } RectA;
 
 //Возвращает размер экрана.
@@ -34,7 +35,7 @@ void R_SplitY1(const RectA* in, int height1, RectA* out1, RectA* out2);
 //height2 - высота получившегося out2
 void R_SplitY2(const RectA* in, int height2, RectA* out1, RectA* out2);
 
-//Рисует прямоугольник используя UTFT_getBackColor
+//Рисует прямоугольник используя back_color
 void R_FillRectBack(const RectA* in);
 
 //Рисует текст, заполняющий весь прямоугольник.

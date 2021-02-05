@@ -30,47 +30,45 @@ void DrawRestangles()
     R_SplitY1(&r_tmp, UTF_Height(), &r_center_up, &r_tmp);
 
     R_SplitX1(&r_top, r_top.width/3, &r_top1, &r_top2);
+    r_top1.back_color = VGA_GREEN;
+    r_top2.back_color = VGA_RED;
 
     R_SplitX2(&r_bottom, r_top.width/3, &r_bottom1, &r_bottom2);
     R_SplitX2(&r_bottom1, UTF_StringWidth("-9.999"), &r_bottom0, &r_bottom1);
+    r_bottom0.back_color = VGA_NAVY;
+    r_bottom1.back_color = VGA_FUCHSIA;
+    r_bottom2.back_color = VGA_NAVY;
 
     R_SplitX1(&r_center_up, 50, &r_center_up0, &r_center_up);
     R_SplitX2(&r_center_up, 50, &r_center_up, &r_center_up3);
 
     R_SplitX1(&r_center_up, UTF_StringWidth("-99.999"), &r_center_up1, &r_center_up2);
+    r_center_up1.back_color = VGA_BLUE;
+    r_center_up2.back_color = VGA_LIME;
+    r_tmp.back_color = VGA_FUCHSIA;
+    r_center_up0.back_color = VGA_NAVY;
+    r_center_up3.back_color = VGA_NAVY;
 
 
 
     UTF_SetFont(g_default_font);
-    UTFT_setBackColor(VGA_GREEN);
     R_DrawStringJustify(&r_top1, "Top1", UTF_CENTER);
-    UTFT_setBackColor(VGA_RED);
     R_DrawStringJustify(&r_top2, "Top2", UTF_CENTER);
 
-
-
-    UTFT_setBackColor(VGA_NAVY);
     R_FillRectBack(&r_bottom0);
 
-    UTFT_setBackColor(VGA_FUCHSIA);
     UTF_SetFont(font_condensed59);
     R_DrawStringJustify(&r_bottom1, "0.123", UTF_RIGHT);
 
-    UTFT_setBackColor(VGA_NAVY);
     UTF_SetFont(g_default_font);
     R_DrawStringJustify(&r_bottom2, "Bottom2", UTF_LEFT);
 
-    UTFT_setBackColor(VGA_BLUE);
     UTF_SetFont(font_condensed59);
     R_DrawStringJustify(&r_center_up1, "-12.323", UTF_RIGHT);
-    UTFT_setBackColor(VGA_LIME);
     UTF_SetFont(g_default_font);
     R_DrawStringJustify(&r_center_up2, " % def val", UTF_LEFT);
 
-    UTFT_setBackColor(VGA_FUCHSIA);
     R_FillRectBack(&r_tmp);
-
-    UTFT_setBackColor(VGA_NAVY);
     R_FillRectBack(&r_center_up0);
     R_FillRectBack(&r_center_up3);
 
