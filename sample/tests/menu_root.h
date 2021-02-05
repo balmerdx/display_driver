@@ -11,3 +11,4 @@ void SceneStringJustifyStart();
 void SceneScrollStart();
 void SceneFpsStart();
 void SceneRectUtilsStart();
+void SceneColorsStart();

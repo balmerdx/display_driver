@@ -14,6 +14,7 @@
 ../../display/interface/rect_utils.c
 ../../display/interface/statusbar.c
 ../tests/menu_root.c
+../tests/test_colors.c
 ../tests/test_font.c
 ../tests/test_fps.c
 ../tests/test_images.c

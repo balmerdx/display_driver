@@ -20,6 +20,7 @@ DEPS += \
 	output/base/__/__/display/interface/rect_utils.d \
 	output/base/__/__/display/interface/statusbar.d \
 	output/base/__/tests/menu_root.d \
+	output/base/__/tests/test_colors.d \
 	output/base/__/tests/test_font.d \
 	output/base/__/tests/test_fps.d \
 	output/base/__/tests/test_images.d \
@@ -80,6 +81,7 @@ OBJS += \
 	output/base/__/__/display/interface/rect_utils.o \
 	output/base/__/__/display/interface/statusbar.o \
 	output/base/__/tests/menu_root.o \
+	output/base/__/tests/test_colors.o \
 	output/base/__/tests/test_font.o \
 	output/base/__/tests/test_fps.o \
 	output/base/__/tests/test_images.o \
@@ -185,6 +187,10 @@ output/base/__/__/display/interface/statusbar.o: ./../../display/interface/statu
 
 output/base/__/tests/menu_root.o: ./../tests/menu_root.c
 	@echo 'Building target: menu_root.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/tests/test_colors.o: ./../tests/test_colors.c
+	@echo 'Building target: test_colors.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
 output/base/__/tests/test_font.o: ./../tests/test_font.c
