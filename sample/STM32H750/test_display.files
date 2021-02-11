@@ -12,11 +12,13 @@
 ../../display/interface/plot.c
 ../../display/interface/progress_bar.c
 ../../display/interface/rect_utils.c
+../../display/interface/scene_get_float.c
 ../../display/interface/statusbar.c
 ../tests/menu_root.c
 ../tests/test_colors.c
 ../tests/test_font.c
 ../tests/test_fps.c
+../tests/test_get_float.c
 ../tests/test_images.c
 ../tests/test_plot.c
 ../tests/test_primitives.c
@@ -71,6 +73,7 @@ Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c
 ../../display/interface/plot.h
 ../../display/interface/progress_bar.h
 ../../display/interface/rect_utils.h
+../../display/interface/scene_get_float.h
 ../../display/interface/statusbar.h
 ../tests/menu_root.h
 Src/main.h

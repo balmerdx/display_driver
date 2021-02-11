@@ -17,6 +17,7 @@ enum
     MR_FPS,
     MR_RECT_UTILS,
     MR_COLORS,
+    MR_GET_FLOAT,
 };
 
 static int last_menu_index = 0;
@@ -34,6 +35,7 @@ void MenuRootStart()
     MenuAdd("FPS", MR_FPS);
     MenuAdd("Rect utils", MR_RECT_UTILS);
     MenuAdd("Colors", MR_COLORS);
+    MenuAdd("Get float", MR_GET_FLOAT);
 
     MenuSetIndex(last_menu_index);
     MenuRedraw();
@@ -106,6 +108,12 @@ void MenuRootQuant()
     if(MenuData()==MR_COLORS)
     {
         SceneColorsStart();
+        return;
+    }
+
+    if(MenuData()==MR_GET_FLOAT)
+    {
+        SceneTestGetFloatStart();
         return;
     }
 }

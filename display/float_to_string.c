@@ -1,4 +1,5 @@
 #include "float_to_string.h"
+#include <string.h>
 
 int floatToStringWithoutZero(char * outstr, int outstr_size, float value, int places, int minwidth, bool rightjustify)
 {
@@ -129,7 +130,7 @@ int floatToString(char * outstr, int outstr_size, float value, int places, int m
     return chars;
 }
 
-void intToString(char st[27], long num, int length, char filler)
+void intToString(char st[27], int32_t num, int length, char filler)
 {
     char buf[25];
     bool neg=false;
@@ -188,4 +189,15 @@ void intToString(char st[27], long num, int length, char filler)
 
     }
 
+}
+
+void catInt(char* st, int32_t num)
+{
+    intToString(st+strlen(st), num, 0, NUM_SPACE);
+}
+
+void catFloat(char* st, float value, int places)
+{
+    int outstr_size = 20;
+    floatToString(st+strlen(st), outstr_size, value, places, 0, false);
 }

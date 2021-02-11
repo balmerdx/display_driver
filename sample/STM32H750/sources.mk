@@ -18,11 +18,13 @@ DEPS += \
 	output/base/__/__/display/interface/plot.d \
 	output/base/__/__/display/interface/progress_bar.d \
 	output/base/__/__/display/interface/rect_utils.d \
+	output/base/__/__/display/interface/scene_get_float.d \
 	output/base/__/__/display/interface/statusbar.d \
 	output/base/__/tests/menu_root.d \
 	output/base/__/tests/test_colors.d \
 	output/base/__/tests/test_font.d \
 	output/base/__/tests/test_fps.d \
+	output/base/__/tests/test_get_float.d \
 	output/base/__/tests/test_images.d \
 	output/base/__/tests/test_plot.d \
 	output/base/__/tests/test_primitives.d \
@@ -79,11 +81,13 @@ OBJS += \
 	output/base/__/__/display/interface/plot.o \
 	output/base/__/__/display/interface/progress_bar.o \
 	output/base/__/__/display/interface/rect_utils.o \
+	output/base/__/__/display/interface/scene_get_float.o \
 	output/base/__/__/display/interface/statusbar.o \
 	output/base/__/tests/menu_root.o \
 	output/base/__/tests/test_colors.o \
 	output/base/__/tests/test_font.o \
 	output/base/__/tests/test_fps.o \
+	output/base/__/tests/test_get_float.o \
 	output/base/__/tests/test_images.o \
 	output/base/__/tests/test_plot.o \
 	output/base/__/tests/test_primitives.o \
@@ -181,6 +185,10 @@ output/base/__/__/display/interface/rect_utils.o: ./../../display/interface/rect
 	@echo 'Building target: rect_utils.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
+output/base/__/__/display/interface/scene_get_float.o: ./../../display/interface/scene_get_float.c
+	@echo 'Building target: scene_get_float.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
 output/base/__/__/display/interface/statusbar.o: ./../../display/interface/statusbar.c
 	@echo 'Building target: statusbar.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
@@ -199,6 +207,10 @@ output/base/__/tests/test_font.o: ./../tests/test_font.c
 
 output/base/__/tests/test_fps.o: ./../tests/test_fps.c
 	@echo 'Building target: test_fps.c'
+	@$(CC) $(C_FLAGS) -o "$@" "$<"
+
+output/base/__/tests/test_get_float.o: ./../tests/test_get_float.c
+	@echo 'Building target: test_get_float.c'
 	@$(CC) $(C_FLAGS) -o "$@" "$<"
 
 output/base/__/tests/test_images.o: ./../tests/test_images.c

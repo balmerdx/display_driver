@@ -12,3 +12,4 @@ void SceneScrollStart();
 void SceneFpsStart();
 void SceneRectUtilsStart();
 void SceneColorsStart();
+void SceneTestGetFloatStart();

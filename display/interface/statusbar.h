@@ -6,7 +6,7 @@
 #include "colors.h"
 
 #define STATUSBAR_BACKGROUND COLOR_BACKGROUND_BLUE
-#define STATUSBAR_STR_LEN 40
+#define STATUSBAR_STR_LEN 60
 
 //Копирует строку, strlen(data)==STATUSBAR_STR_LEN всегда.
 //Оставшиеся позиции заполняются пробелами.
